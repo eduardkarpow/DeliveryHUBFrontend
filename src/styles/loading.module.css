@@ -1,0 +1,48 @@
+.main{
+    width: 100vw;
+    height: 100vh;
+    background-color: #009db5;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+.wrapper{
+    height: 100px;
+    width: auto;
+    position: relative;
+}
+.text{
+    color: white;
+    font-size: 28px;
+    font-weight: 800;
+    margin: 0 auto;
+}
+.text>span:last-child{
+    padding: 10px;
+    display: inline-block;
+    margin: 0 auto;
+    height: 32px;
+    background-color: white;
+    color: #009db5;
+    border-radius: 8px;
+
+}
+.text>span:first-child{
+    height: 0px;
+    width: 82px;
+    background-color: #009db5;
+    position: absolute;
+    top: 0px;
+    right: 0;
+    display: inline-block;
+
+    animation-name: blinking;
+    animation-timing-function: ease-in;
+    animation-duration: 2s;
+    animation-iteration-count: infinite;
+}
+@keyframes blinking {
+    0% {padding: 0px;}
+    50% {padding: 26px 0;}
+    100% {padding: 0px;}
+}

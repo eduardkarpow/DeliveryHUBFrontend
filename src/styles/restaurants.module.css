@@ -1,0 +1,89 @@
+.wrapper{
+    width: 80%;
+    min-height: 100vh;
+    margin: 0 auto;
+    padding: 60px 30px;
+    background-color: #e8e6e6;
+}
+.categories{
+    margin-top: 20px;
+    width: 250px;
+    display: flex;
+    justify-content: space-between;
+    flex-wrap: wrap;
+}
+.prices{
+    margin-top: 5px;
+    width: 150px;
+    display: flex;
+    justify-content: space-between;
+    flex-wrap: wrap;
+}
+.rating{
+    margin-top: 5px;
+    width: 300px;
+    display: flex;
+    justify-content: space-between;
+    flex-wrap: wrap;
+}
+.categories>span{
+    padding: 10px;
+    border-radius: 20px;
+    border: 2px solid gray;
+    cursor: pointer;
+    font-size: 20px;
+    font-weight: 700;
+}
+.rating>span{
+    padding: 10px;
+    border-radius: 20px;
+    border: 2px solid gray;
+    cursor: pointer;
+    font-size: 20px;
+    font-weight: 700;
+}
+.prices>span{
+    padding: 10px;
+    border-radius: 20px;
+    border: 2px solid gray;
+    cursor: pointer;
+    font-size: 20px;
+    font-weight: 700;
+}
+span.active{
+    border-color: #62CBDA;
+}
+.restaurant_item{
+    display: flex;
+    margin-top: 40px;
+}
+.restaurant_item>img{
+    display: block;
+    width: 40%;
+    height: auto;
+}
+.content{
+    padding: 20px;
+    color: #000000;
+}
+.restaurant_name{
+    font-size: 30px;
+    font-weight: 800;
+}
+.info{
+    display: flex;
+}
+.info>div{
+    margin-left: 10px;
+}
+.category{
+    display: flex;
+    color: gray;
+    opacity: .7;
+    font-size: 20px;
+    margin-top: 10px;
+}
+.location{
+    font-size: 18px;
+    margin-top: 10px;
+}

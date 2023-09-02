@@ -1,0 +1,135 @@
+.wrapper{
+    width: 80%;
+    min-height: 100vh;
+    margin: 0 auto;
+    padding: 60px 30px;
+    background-color: #e8e6e6;
+}
+.menu_title{
+    font-size: 30px;
+    font-weight: 800;
+    text-align: center;
+    margin: 40px 0 ;
+}
+.menu{
+    display: flex;
+    justify-content: space-between;
+    flex-wrap: wrap;
+}
+.menu_item{
+    width: 23%;
+    margin: 10px 1%;
+    cursor: pointer;
+}
+.menu_item>a{
+    width: 23%;
+}
+.menu_item>a>img{
+    width: 100%;
+    height: auto;
+}
+.menu_item>div{
+    margin: 10px auto;
+    font-weight: 800;
+    font-size: 20px;
+    text-align: center;
+}
+.menu_item>button{
+    width: 60%;
+    padding: 10px;
+    display: block;
+    margin: 0 auto;
+    border: 2px solid #009db5;
+    background-color: #ffffff;
+    color: #009db5;
+    font-size: 20px;
+    font-weight: 800;
+    border-radius: 10px;
+    cursor: pointer;
+    transition: opacity .2s linear;
+}
+.menu_item>button:hover{
+    opacity: .6;
+}
+.review_items{
+    width: 100%;
+    display: flex;
+    flex-direction: column;
+
+}
+.review_item{
+    border: 2px solid #009db5;
+    border-radius: 10px;
+    width: 100%;
+    display: flex;
+    margin-top: 20px;
+}
+.review_image{
+    width: 20%;
+
+}
+.review_image>img{
+    width: 100%;
+    height: auto;
+}
+.review_content{
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    margin-left: 20px;
+}
+.rating{
+    font-size: 26px;
+    font-weight: 800;
+    margin: 10px 0;
+}
+.comment_rating{
+    color: #00D225;
+    font-size: 22px;
+    font-weight: 800;
+    margin: 0 5px;
+}
+
+.rate{
+    display: flex;
+    align-items: center;
+    margin-bottom: 10px;
+}
+.arrow_up{
+    width: 0;
+    height: 0;
+    border-left: 15px solid transparent;
+    border-right: 15px solid transparent;
+
+    border-bottom: 15px solid grey;
+    cursor: pointer;
+}
+.arrow_down{
+    width: 0;
+    height: 0;
+    border-left: 15px solid transparent;
+    border-right: 15px solid transparent;
+
+    border-top: 15px solid grey;
+    cursor: pointer;
+}
+.negative{
+    color: red;
+}
+.add_review{
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+.add_review>textarea{
+    resize: none;
+    box-sizing: border-box;
+    width: 800px;
+    height: 200px;
+    padding: 10px;
+    font-size: 18px;
+}
+.review_button{
+    width: 400px;
+    padding: 20px 10px
+}

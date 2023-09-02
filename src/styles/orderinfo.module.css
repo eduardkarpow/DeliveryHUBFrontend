@@ -1,0 +1,85 @@
+.wrapper{
+    width: 80%;
+    min-height: 100vh;
+    margin: 0 auto;
+    padding: 70px 30px;
+    background-color: #e8e6e6;
+}
+.restaurant_name{
+    font-size: 40px;
+    font-weight: 800;
+    text-align: center;
+    margin: 20px 0;
+}
+.restaurant_info{
+    display: flex;
+    align-items: center;
+}
+.restaurant_image{
+    width: 40%;
+    margin-right: 10px;
+}
+.restaurant_image>img{
+    width: 100%;
+    height: auto;
+}
+.price{
+    font-size: 40px;
+    font-weight: 800;
+    color: #00D225;
+}
+.datetime{
+    display: flex;
+    width: 200px;
+    justify-content: space-between;
+    font-size: 20px;
+    color: gray;
+}
+.status {
+    color: red;
+    font-size: 26px;
+    font-weight: 700;
+}
+.order_caption{
+    font-size: 30px;
+    font-weight: 600;
+    margin: 20px 0;
+    text-align: center;
+}
+.order_items{
+    display: flex;
+    flex-wrap: wrap;
+}
+.order_item{
+    width: 23%;
+    margin: 10px 1%;
+    border: 1px solid #009db5;
+    border-radius: 10px;
+    position: relative;
+    cursor: pointer;
+}
+.order_item>a>img{
+    width: 100%;
+    height: auto;
+}
+.item_amount{
+    position: absolute;
+    top: -10px;
+    left: -10px;
+    padding: 4px 12px;
+    background-color: red;
+    border-radius: 50%;
+    color: #ffffff;
+    font-size: 22px;
+    font-weight: 800;
+}
+.item_name{
+    font-size: 18px;
+    font-weight: 600;
+    text-align: center;
+}
+.item_price{
+    font-size: 18px;
+    font-weight: 600;
+    text-align: center;
+}

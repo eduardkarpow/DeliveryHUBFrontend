@@ -1,0 +1,61 @@
+.wrapper{
+    width: 80%;
+    min-height: 100vh;
+    margin: 0 auto;
+    padding: 70px 30px;
+    background-color: #e8e6e6;
+}
+.container{
+    display: flex;
+}
+#food{
+    width: 45%;
+    height: auto;
+    margin-right: 30px;
+}
+.caption{
+    font-size: 30px;
+    font-weight: 800;
+}
+.ingredients{
+    font-size: 36px;
+    font-weight: 800;
+    text-align: center;
+    margin: 20px 0;
+}
+.objects{
+    display: flex;
+    flex-wrap: wrap;
+}
+.ingredient_item{
+    width: 23%;
+    height: auto;
+    margin: 10px 1%;
+}
+.ingredient_item>img{
+    width: 100%;
+    height: auto;
+}
+.ingredient_caption{
+    font-size: 20px;
+    font-weight: 700;
+    text-align: center;
+}
+.calories {
+    display: flex;
+    width: 400px;
+    margin: 10px auto;
+    justify-content: space-between;
+    font-size: 18px;
+}
+.calories>div{
+    font-weight: 600;
+}
+.wall{
+    display: inline-block;
+
+    width: 2px;
+    height: 40px;
+    background-color: #000000;
+
+}
