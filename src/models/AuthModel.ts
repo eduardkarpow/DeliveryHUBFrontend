@@ -4,4 +4,5 @@ export interface AuthStateModel{
     password: string;
     firstName: string;
     lastName: string;
+    isAuth: boolean;
 }

@@ -1,10 +1,10 @@
 import * as jose from "jose";
-import {PayloadType, TokenModel} from "../../models/TokenModel";
+import {PayloadType, TokenModel, Tokens} from "../../models/TokenModel";
 import {ThunkAction} from "redux-thunk";
 import {RootState} from "../index";
 import {AnyAction} from "redux";
 import {JWTPayload} from "jose";
-export const generateTokens = (payload:PayloadType):ThunkAction<void, RootState,unknown,AnyAction> => {
+export const generateTokens = (payload:PayloadType):ThunkAction<Promise<Tokens>, RootState,unknown,AnyAction> => {
     return async dispatch => {
         const access_secret = jose.base64url.decode("NMZuPdFWv09DSvoKon1UOXdzfnlD+W84R4Ydd69jRYA=\n");
         const access_token = await new jose.EncryptJWT(payload)
@@ -31,25 +31,40 @@ export const generateTokens = (payload:PayloadType):ThunkAction<void, RootState,
 }
 export const saveToken = (login:string, accessToken:string, refreshToken:string):ThunkAction<void, RootState,unknown,AnyAction> => {
     return async dispatch => {
-        const tokenData:TokenModel = await fetch("http://localhost:8000/tokens/getTokens", {
+        const tokenData:TokenModel[] = await fetch("http://localhost:8000/tokens/getTokens", {
             method: "POST",
-            body: JSON.stringify({"users_login": login})
+            mode: "cors",
+            headers: {
+                'Accept': 'application/json',
+                'Content-Type': 'application/json'
+            },
+            body: JSON.stringify({users_login: login})
         }).then(res => res.json());
-        if(tokenData){
+        if(tokenData.length){
             const newTokensData = {
-                "access_token": accessToken,
-                "refresh_token": refreshToken,
-                "id":{
-                    "users_login": login
+                access_token: accessToken,
+                refresh_token: refreshToken,
+                id:{
+                    users_login: login
                 }
             }
             const resp = fetch("http://localhost:8000/tokens/updateTokens", {
               method: "POST",
+                mode: "cors",
+                headers: {
+                    'Accept': 'application/json',
+                    'Content-Type': 'application/json'
+                },
               body: JSON.stringify(newTokensData)
             })
         } else{
             const res = await fetch("http://localhost:8000/tokens/setTokens", {
                 method: "POST",
+                mode: "cors",
+                headers: {
+                    'Accept': 'application/json',
+                    'Content-Type': 'application/json'
+                },
                 body: JSON.stringify({"access_token": accessToken, "refresh_token": refreshToken, "users_login": login})
             })
         }

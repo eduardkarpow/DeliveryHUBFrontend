@@ -13,10 +13,12 @@ function RegisterComponent() {
     const [lastName, setLastName] = useState("");
 
     const dispatch:ThunkDispatch<RootState, unknown,any> = useAppDispatch();
-    console.log(dispatch(generateTokens({login:"adm", password: "pass", phone: "phone", firstName: "first", lastName:"last"})));
-    const registerUser = () => {
-        //dispatch(register(login, password, phone, firstName, lastName));
+    const registerUser = (event:any) => {
+        event.preventDefault();
+        dispatch(register(login, password, phone, firstName, lastName));
     }
+
+    console.log(document.cookie);
 
     return (
         <div className={styles.wrapper}>
@@ -46,7 +48,7 @@ function RegisterComponent() {
                        placeholder="type your Last Name"
                        value={lastName}
                        onChange={e => setLastName(e.target.value)} />
-                <button type="submit" onClick = {registerUser}>REGISTER</button>
+                <button onClick = {registerUser}>REGISTER</button>
             </form>
         </div>
     );
