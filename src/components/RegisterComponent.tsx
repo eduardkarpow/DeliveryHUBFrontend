@@ -1,10 +1,10 @@
-import React, {useState} from 'react';
+import React, {useEffect, useState} from 'react';
 import styles from "../styles/register.module.css";
 import {ThunkDispatch} from "redux-thunk";
 import {RootState} from "../store";
-import {useAppDispatch} from "../hooks/ReduxHooks";
+import {useAppDispatch, useAppSelector} from "../hooks/ReduxHooks";
 import {register} from "../store/actions/AuthAction";
-import {generateTokens} from "../store/actions/TokenAction";
+import {redirect, useNavigate} from "react-router-dom";
 function RegisterComponent() {
     const [login, setLogin] = useState("");
     const [password, setPassword] = useState("");
@@ -13,12 +13,18 @@ function RegisterComponent() {
     const [lastName, setLastName] = useState("");
 
     const dispatch:ThunkDispatch<RootState, unknown,any> = useAppDispatch();
+    const isAuth = useAppSelector(store => store.Auth.isAuth);
+    const navigate = useNavigate();
+    useEffect(() => {
+        if(isAuth){
+            navigate("/login");
+        }
+
+    }, [isAuth]);
     const registerUser = (event:any) => {
         event.preventDefault();
         dispatch(register(login, password, phone, firstName, lastName));
     }
-
-    console.log(document.cookie);
 
     return (
         <div className={styles.wrapper}>

@@ -13,6 +13,6 @@ export interface TokenModel{
     users_login: string;
 }
 export interface Tokens{
-    access_token: string;
-    refresh_token: string;
+    accessToken: string;
+    refreshToken: string;
 }
