@@ -1,4 +1,4 @@
-import React from 'react';
+import React, {useEffect} from 'react';
 import './App.css';
 import LoadingComponent from "./components/LoadingComponent";
 import RegisterComponent from "./components/RegisterComponent";
@@ -11,8 +11,21 @@ import OrderListComponent from "./components/OrderListComponent";
 import OrderInfoComponent from "./components/OrderInfoComponent";
 
 import {BrowserRouter, Routes, Route} from "react-router-dom";
+import {ThunkDispatch} from "redux-thunk";
+import {RootState} from "./store";
+import {useAppDispatch} from "./hooks/ReduxHooks";
+import {checkAuth} from "./store/actions/AuthAction";
 
 function App() {
+
+    const dispatch:ThunkDispatch<RootState, unknown, any> = useAppDispatch();
+
+    useEffect(() => {
+        if(localStorage.getItem("token")){
+            dispatch(checkAuth());
+        }
+    }, [])
+
   return (
       <BrowserRouter>
         <NavbarComponent/>

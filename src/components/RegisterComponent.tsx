@@ -4,7 +4,7 @@ import {ThunkDispatch} from "redux-thunk";
 import {RootState} from "../store";
 import {useAppDispatch, useAppSelector} from "../hooks/ReduxHooks";
 import {register} from "../store/actions/AuthAction";
-import {redirect, useNavigate} from "react-router-dom";
+import {useNavigate} from "react-router-dom";
 function RegisterComponent() {
     const [login, setLogin] = useState("");
     const [password, setPassword] = useState("");
@@ -20,7 +20,7 @@ function RegisterComponent() {
             navigate("/login");
         }
 
-    }, [isAuth]);
+    }, [isAuth, navigate]);
     const registerUser = (event:any) => {
         event.preventDefault();
         dispatch(register(login, password, phone, firstName, lastName));

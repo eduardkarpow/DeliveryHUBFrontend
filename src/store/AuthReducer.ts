@@ -16,22 +16,17 @@ export const AuthReducer = (state:AuthStateModel=initialState, action:AuthAction
         case "LOGIN":
 
             return {...state, login: action.login, password: action.password, phone: action.phone, firstName:action.firstName, lastName:action.lastName};
-            break;
         case "REGISTER":
 
             return {...state, login: action.login, password: action.password, phone: action.phone, firstName:action.firstName, lastName:action.lastName};
-            break;
         case "LOGOUT":
 
-            return state;
-            break;
+            return {...state, login: "", password: "", phone: "", firstName: "", lastName: ""};
         case "AUTH":
 
             return {...state, isAuth: action.isAuth};
-            break;
         default:
             return state;
-            break;
     }
 }
 

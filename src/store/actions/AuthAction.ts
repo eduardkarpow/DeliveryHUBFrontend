@@ -1,20 +1,21 @@
 import {ThunkAction} from "redux-thunk";
 import {RootState} from "../index";
 import {AnyAction} from "redux";
-import {authActionCreator, loginActionCreator, registerActionCreator} from "../AuthReducer";
+import {authActionCreator, loginActionCreator, logoutActionCreator, registerActionCreator} from "../AuthReducer";
 import {Tokens} from "../../models/TokenModel";
-import {useNavigate} from "react-router-dom";
 
+export const testing = ():ThunkAction<void, RootState,unknown,AnyAction> => {
+    return async dispatch => {
+        console.log(await fetch("/test", {
+            method: "GET"
+        }))
+    }
+}
 export const register = (login:string, password:string, phone:string, firstName:string, lastName:string):ThunkAction<void, RootState,unknown,AnyAction> => {
     return async dispatch => {
         try{
-            const tokens:Tokens = await fetch("http://localhost:8000/register", {
+            const tokens:Tokens = await fetch("/register", {
                 method: "POST",
-                mode: "cors",
-                headers: {
-                    'Accept': 'application/json',
-                    'Content-Type': 'application/json'
-                },
                 body: JSON.stringify({
                     login,
                     password,
@@ -36,13 +37,8 @@ export const register = (login:string, password:string, phone:string, firstName:
 export const logIn = (login:string, password:string):ThunkAction<void, RootState,unknown,AnyAction> => {
     return async dispatch => {
         try {
-            const data = await fetch("http://localhost:8000/login", {
+            const data = await fetch("/login", {
                 method: "POST",
-                mode: "cors",
-                headers: {
-                    'Accept': 'application/json',
-                    'Content-Type': 'application/json'
-                },
                 body: JSON.stringify({
                     login,
                     password
@@ -55,5 +51,28 @@ export const logIn = (login:string, password:string):ThunkAction<void, RootState
             console.error(e);
         }
 
+    }
+}
+export const logout = (login:string):ThunkAction<void, RootState,unknown,AnyAction> => {
+    return async dispatch => {
+        await fetch("/logout", {
+            method: "POST",
+            body: JSON.stringify({
+                login
+            })
+        })
+        localStorage.removeItem("token");
+        dispatch(logoutActionCreator());
+        dispatch(authActionCreator(false));
+    }
+}
+export const checkAuth = ():ThunkAction<void, RootState,unknown,AnyAction> => {
+    return async dispatch => {
+        const data = await fetch("/refresh", {
+            method: "GET"
+        }).then(res => res.json());
+        dispatch(loginActionCreator(data.user.login, data.user.password, data.user.phone_number, data.user.first_name, data.user.last_name));
+        localStorage.setItem("token", data.accessToken);
+        dispatch(authActionCreator(true));
     }
 }
