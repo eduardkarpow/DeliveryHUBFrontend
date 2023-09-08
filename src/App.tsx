@@ -10,7 +10,7 @@ import IngredientsComponent from "./components/IngredientsComponent";
 import OrderListComponent from "./components/OrderListComponent";
 import OrderInfoComponent from "./components/OrderInfoComponent";
 
-import {BrowserRouter, Routes, Route} from "react-router-dom";
+import {BrowserRouter, Routes, Route, useNavigate} from "react-router-dom";
 import {ThunkDispatch} from "redux-thunk";
 import {RootState} from "./store";
 import {useAppDispatch} from "./hooks/ReduxHooks";
@@ -20,10 +20,20 @@ function App() {
 
     const dispatch:ThunkDispatch<RootState, unknown, any> = useAppDispatch();
 
+    //const navigate = useNavigate();
+
     useEffect(() => {
-        if(localStorage.getItem("token")){
-            dispatch(checkAuth());
+        try{
+            if(localStorage.getItem("token")){
+                dispatch(checkAuth());
+            }
+        } catch(e){
+            setTimeout(() => {
+                window.location.replace('http://localhost:3000/login');
+            }, 1000);
+
         }
+
     }, [])
 
   return (

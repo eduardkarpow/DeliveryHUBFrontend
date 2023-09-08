@@ -68,11 +68,17 @@ export const logout = (login:string):ThunkAction<void, RootState,unknown,AnyActi
 }
 export const checkAuth = ():ThunkAction<void, RootState,unknown,AnyAction> => {
     return async dispatch => {
-        const data = await fetch("/refresh", {
-            method: "GET"
-        }).then(res => res.json());
-        dispatch(loginActionCreator(data.user.login, data.user.password, data.user.phone_number, data.user.first_name, data.user.last_name));
-        localStorage.setItem("token", data.accessToken);
-        dispatch(authActionCreator(true));
+        try{
+            const data = await fetch("/refresh", {
+                method: "GET"
+            }).then(res => res.json());
+
+            dispatch(loginActionCreator(data.user.login, data.user.password, data.user.phone_number, data.user.first_name, data.user.last_name));
+            localStorage.setItem("token", data.accessToken);
+            dispatch(authActionCreator(true));
+        } catch(e:any){
+            console.log(e);
+        }
+
     }
 }
