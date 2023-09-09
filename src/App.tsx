@@ -13,7 +13,7 @@ import OrderInfoComponent from "./components/OrderInfoComponent";
 import {BrowserRouter, Routes, Route, useNavigate} from "react-router-dom";
 import {ThunkDispatch} from "redux-thunk";
 import {RootState} from "./store";
-import {useAppDispatch} from "./hooks/ReduxHooks";
+import {useAppDispatch, useAppSelector} from "./hooks/ReduxHooks";
 import {checkAuth} from "./store/actions/AuthAction";
 
 function App() {
@@ -36,19 +36,28 @@ function App() {
 
     }, [])
 
+    const isLoading = useAppSelector(store => store.Auth.isLoading);
+
   return (
-      <BrowserRouter>
-        <NavbarComponent/>
-          <Routes>
-              <Route path="/login" element={<LoginComponent/>}/>
-              <Route path="/register" element={<RegisterComponent/>}/>
-              <Route path="/restaurants" element={<RestaurantsComponent/>}/>
-              <Route path="/restaurants/:restid" element={<RestaurantPageComponent/>}/>
-              <Route path="/restaurants/:restid/:foodid" element={<IngredientsComponent/>}/>
-              <Route path="/orders" element={<OrderListComponent/>}/>
-              <Route path="/orders/:orderid" element={<OrderInfoComponent/>}/>
-          </Routes>
-      </BrowserRouter>
+      <div>
+          {isLoading ? <LoadingComponent/> : <span/>}
+          <BrowserRouter>
+
+              <NavbarComponent/>
+
+              <Routes>
+
+                  <Route path="/login" element={<LoginComponent/>}/>
+                  <Route path="/register" element={<RegisterComponent/>}/>
+                  <Route path="/restaurants" element={<RestaurantsComponent/>}/>
+                  <Route path="/restaurants/:restid" element={<RestaurantPageComponent/>}/>
+                  <Route path="/restaurants/:restid/:foodid" element={<IngredientsComponent/>}/>
+                  <Route path="/orders" element={<OrderListComponent/>}/>
+                  <Route path="/orders/:orderid" element={<OrderInfoComponent/>}/>
+              </Routes>
+          </BrowserRouter>
+      </div>
+
 
   );
 }

@@ -1,4 +1,4 @@
-export type AuthActions = LOGIN | REGISTER | LOGOUT | AUTH;
+export type AuthActions = LOGIN | REGISTER | LOGOUT | AUTH | LOADING | AVATAR;
 export interface LOGIN{
     type: "LOGIN";
     login: string;
@@ -21,4 +21,12 @@ export interface LOGOUT{
 export interface AUTH{
     type: "AUTH";
     isAuth: boolean;
+}
+export interface LOADING{
+    type: "LOADING";
+    isLoading: boolean;
+}
+export interface AVATAR{
+    type: "AVATAR";
+    avatarHref: string;
 }

@@ -5,4 +5,6 @@ export interface AuthStateModel{
     firstName: string;
     lastName: string;
     isAuth: boolean;
+    isLoading: boolean;
+    avatarHref: string;
 }

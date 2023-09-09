@@ -5,12 +5,14 @@ import {useAppDispatch, useAppSelector} from "../hooks/ReduxHooks";
 import {ThunkDispatch} from "redux-thunk";
 import {RootState} from "../store";
 import {logout} from "../store/actions/AuthAction";
+import img from "../images/avatar/Mark_Zuckerberg.jpg";
 
 const NavbarComponent = () => {
 
     const isAuth:boolean = useAppSelector(store => store.Auth.isAuth);
     const login:string = useAppSelector(store => store.Auth.login);
     const dispatch:ThunkDispatch<RootState, unknown, any> = useAppDispatch();
+    const avatar = useAppSelector(store => store.Auth.avatarHref);
 
     const Logout = (e:any) => {
         e.preventDefault();
@@ -26,7 +28,15 @@ const NavbarComponent = () => {
             </div>
                 {isAuth ?
                     <div className={styles.account}>
+                        <div className={styles.avatar}>
+                            <img src={avatar} alt="123"/>
+                        </div>
                         <div>{login}</div>
+                        <div>
+
+
+                        </div>
+                        
                         <NavLink className={styles.logout} onClick={Logout} to="/login">Logout</NavLink>
                     </div>
                     :

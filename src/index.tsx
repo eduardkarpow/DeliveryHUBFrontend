@@ -19,8 +19,7 @@ const unregister = FetchIntercept.register({
         updatedConfig.credentials = "include";
         updatedConfig.mode = "cors";
         updatedConfig.headers = {
-            'Accept': 'application/json',
-            'Content-Type': 'application/json',
+            ...config.headers,
             "Authorization": `Bearer ${localStorage.getItem("token")}`
         }
         return [BASE_URL+url, updatedConfig];
