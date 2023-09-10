@@ -7,7 +7,7 @@
 }
 .categories{
     margin-top: 20px;
-    width: 250px;
+    width: 500px;
     display: flex;
     justify-content: space-between;
     flex-wrap: wrap;
@@ -29,6 +29,7 @@
 .categories>span{
     padding: 10px;
     border-radius: 20px;
+    margin-bottom: 8px;
     border: 2px solid gray;
     cursor: pointer;
     font-size: 20px;
@@ -78,10 +79,15 @@ span.active{
 }
 .category{
     display: flex;
+    flex-wrap: wrap;
     color: gray;
     opacity: .7;
     font-size: 20px;
     margin-top: 10px;
+}
+.category>div{
+    margin-right: 20px;
+    margin-bottom: 4px;
 }
 .location{
     font-size: 18px;
