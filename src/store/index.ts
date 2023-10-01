@@ -3,10 +3,12 @@ import thunk from "redux-thunk";
 import {AuthReducer} from "./AuthReducer";
 import {RestaurantsReducer} from "./RestaurantsReducer";
 import {RestaurantItemReducer} from "./RestaurantItemReducer";
+import {ReviewsReducer} from "./ReviewsReducer";
 const rootReducer = combineReducers({
     Auth: AuthReducer,
     Restaurants: RestaurantsReducer,
-    RestaurantItem: RestaurantItemReducer
+    RestaurantItem: RestaurantItemReducer,
+    Reviews: ReviewsReducer
 });
 
 export const store = createStore(rootReducer, applyMiddleware(thunk));

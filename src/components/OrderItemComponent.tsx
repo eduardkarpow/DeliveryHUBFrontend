@@ -16,7 +16,7 @@ const OrderItemComponent = () => {
                     </div>
                 </div>
 
-                <div>
+                <div className={styles.buttonWrapper}>
                     <NavLink to="/orders/1" className={styles.button}>MORE INFO</NavLink>
                     <div className={styles.status}>FINISHED</div>
                 </div>

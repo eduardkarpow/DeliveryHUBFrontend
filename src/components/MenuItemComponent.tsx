@@ -1,13 +1,28 @@
-import React from 'react';
+import React, {useState} from 'react';
 import styles from "../styles/restaurantpage.module.css";
 import {NavLink} from "react-router-dom";
+import {MenuProps} from "../models/RestaurantItemModel";
 
-const MenuItemComponent = () => {
+const MenuItemComponent = (props:MenuProps) => {
+
+    const [quantity, setQuantity] = useState(0);
+
     return (
         <div className={styles.menu_item}>
-            <NavLink to="/restaurants/1/1"><img src="https://media.istockphoto.com/id/1188412964/photo/hamburger-with-cheese-and-french-fries.jpg?b=1&s=612x612&w=0&k=20&c=_JT2iitrsfuPYOmYHO336VFWeximXvauz6tRG4-7OVI=" alt="burger"/></NavLink>
-            <div>Burger</div>
-            <button className={styles.button}>+ Order</button>
+            <NavLink to={`/restaurants/${props.restId}/${props.id}`}><img src={`http://localhost:8000/${props.image_href}`} alt={props.name}/></NavLink>
+            <div>{props.name}</div>
+            <div className={styles.food_price}>{props.price + " ₽"}</div>
+            {
+                quantity>0
+                    ?
+                    <div className={styles.orderButtons}>
+                        <button className={styles.button} onClick={e => setQuantity(quantity+1)}>+</button>
+                        <div className={styles.quantity}>{quantity}</div>
+                        <button className={styles.button} onClick={e => setQuantity(quantity-1)}>-</button>
+                    </div>
+                    :
+                    <button className={styles.button} onClick={e => setQuantity(quantity+1)}>+ Order</button>
+            }
         </div>
     );
 };

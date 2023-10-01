@@ -15,12 +15,18 @@ const RestaurantsComponent = () => {
     useEffect(() => {
         dispatch(getAllRestaurants());
         dispatch(getAllSpecializations());
+
     },[])
 
     const addClass = (e:any) => {
         Array.from(document.querySelectorAll("."+styles.categories+">span")).map(spa => spa.classList.remove(styles.active));
         e.target.classList.add(styles.active);
-        dispatch(getSpecialRestaurants({food_specializations_food_specialization: e.target.innerText}));
+        dispatch(getSpecialRestaurants({food_specialization: e.target.innerText}));
+    }
+    const addPrice = (e:any) => {
+        Array.from(document.querySelectorAll("."+styles.prices+">span")).map(spa => spa.classList.remove(styles.active));
+        e.target.classList.add(styles.active);
+        dispatch(getSpecialRestaurants({price_rating : Number(e.target.id)}));
     }
 
     return (
@@ -29,7 +35,7 @@ const RestaurantsComponent = () => {
                 {specs.map((spec, index) => <span onClick={addClass} key = {spec.food_specialization}>{spec.food_specialization}</span>)}
             </div>
             <div className={styles.prices}>
-                <span>$</span><span className={styles.active}>$$</span><span>$$$</span>
+                <span onClick={addPrice} id="1">$</span><span onClick={addPrice} id="2">$$</span><span onClick={addPrice} id="3">$$$</span>
             </div>
             <div className={styles.rating}>
                 <span className={styles.active}>above 4</span><span>above 3</span><span>above 2</span>
