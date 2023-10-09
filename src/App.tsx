@@ -15,6 +15,7 @@ import {ThunkDispatch} from "redux-thunk";
 import {RootState} from "./store";
 import {useAppDispatch, useAppSelector} from "./hooks/ReduxHooks";
 import {checkAuth} from "./store/actions/AuthAction";
+import OrderModalComponent from "./components/OrderModalComponent";
 
 function App() {
 
@@ -55,6 +56,7 @@ function App() {
                   <Route path="/orders" element={<OrderListComponent/>}/>
                   <Route path="/orders/:orderid" element={<OrderInfoComponent/>}/>
               </Routes>
+              <OrderModalComponent/>
           </BrowserRouter>
       </div>
 
