@@ -15,6 +15,7 @@ export interface MenuItemModel{
     fats: number;
     carbohydrates: number;
     image_href: string;
+    amount: number;
 }
 export interface MenuProps{
     restId: number;
@@ -22,4 +23,5 @@ export interface MenuProps{
     image_href: string;
     name: string;
     price: number;
+    index: number;
 }

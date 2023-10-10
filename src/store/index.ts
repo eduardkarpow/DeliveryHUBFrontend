@@ -4,11 +4,13 @@ import {AuthReducer} from "./AuthReducer";
 import {RestaurantsReducer} from "./RestaurantsReducer";
 import {RestaurantItemReducer} from "./RestaurantItemReducer";
 import {ReviewsReducer} from "./ReviewsReducer";
+import {OrdersReducer} from "./OrdersReducer";
 const rootReducer = combineReducers({
     Auth: AuthReducer,
     Restaurants: RestaurantsReducer,
     RestaurantItem: RestaurantItemReducer,
-    Reviews: ReviewsReducer
+    Reviews: ReviewsReducer,
+    Orders: OrdersReducer
 });
 
 export const store = createStore(rootReducer, applyMiddleware(thunk));

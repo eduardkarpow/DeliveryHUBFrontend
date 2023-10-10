@@ -9,6 +9,7 @@ import {ThunkDispatch} from "redux-thunk";
 import {getMenu, getRestaurant} from "../store/actions/RestaurantItemAction";
 import {useParams} from "react-router-dom";
 import {addReview, getAllReviews} from "../store/actions/ReviewsAction";
+import {setPrice} from "../store/actions/OrdersAction";
 const RestaurantPageComponent = () => {
 
     const params = useParams();
@@ -17,6 +18,7 @@ const RestaurantPageComponent = () => {
         dispatch(getRestaurant(Number(params.restid)));
         dispatch(getMenu(Number(params.restid)));
         dispatch(getAllReviews(Number(params.restid)));
+
     },[])
 
     const dispatch:ThunkDispatch<RootState, unknown, any> = useAppDispatch();
@@ -47,7 +49,8 @@ const RestaurantPageComponent = () => {
             <div className={styles.menu}>
                 {menu.map((el, index) =>
                     <MenuItemComponent restId={Number(params.restid)} id={el.id}
-                                       image_href={el.image_href} name={el.name} price={el.price} key={el.id}/>
+                                       image_href={el.image_href} name={el.name}
+                                       price={el.price} index={index} key={el.id}/>
                 )}
             </div>
             <div className={styles.menu_title}>REVIEWS</div>

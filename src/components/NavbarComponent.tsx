@@ -28,9 +28,9 @@ const NavbarComponent = () => {
             </div>
                 {isAuth ?
                     <div className={styles.account}>
-                        <div className={styles.avatar}>
+                        <NavLink to="/account" className={styles.avatar}>
                             <img src={avatar} alt="123"/>
-                        </div>
+                        </NavLink>
                         <div>{login}</div>
                         <div>
 

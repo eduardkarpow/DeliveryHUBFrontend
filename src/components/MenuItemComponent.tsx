@@ -2,10 +2,16 @@ import React, {useState} from 'react';
 import styles from "../styles/restaurantpage.module.css";
 import {NavLink} from "react-router-dom";
 import {MenuProps} from "../models/RestaurantItemModel";
+import {useAppDispatch, useAppSelector} from "../hooks/ReduxHooks";
+import {ThunkDispatch} from "redux-thunk";
+import {RootState} from "../store";
+import {decrement, increment} from "../store/actions/RestaurantItemAction";
 
 const MenuItemComponent = (props:MenuProps) => {
 
-    const [quantity, setQuantity] = useState(0);
+    const menu = useAppSelector(store => store.RestaurantItem.menu);
+    const quantity = useAppSelector(store => store.RestaurantItem.menu[props.index].amount);
+    const dispatch:ThunkDispatch<RootState, unknown, any> = useAppDispatch();
 
     return (
         <div className={styles.menu_item}>
@@ -16,12 +22,12 @@ const MenuItemComponent = (props:MenuProps) => {
                 quantity>0
                     ?
                     <div className={styles.orderButtons}>
-                        <button className={styles.button} onClick={e => setQuantity(quantity+1)}>+</button>
+                        <button className={styles.button} onClick={e => dispatch(increment(props.index, menu))}>+</button>
                         <div className={styles.quantity}>{quantity}</div>
-                        <button className={styles.button} onClick={e => setQuantity(quantity-1)}>-</button>
+                        <button className={styles.button} onClick={e => dispatch(decrement(props.index, menu))}>-</button>
                     </div>
                     :
-                    <button className={styles.button} onClick={e => setQuantity(quantity+1)}>+ Order</button>
+                    <button className={styles.button} onClick={e => dispatch(increment(props.index, menu))}>+ Order</button>
             }
         </div>
     );

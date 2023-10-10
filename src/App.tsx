@@ -16,6 +16,7 @@ import {RootState} from "./store";
 import {useAppDispatch, useAppSelector} from "./hooks/ReduxHooks";
 import {checkAuth} from "./store/actions/AuthAction";
 import OrderModalComponent from "./components/OrderModalComponent";
+import AccountComponent from "./components/AccountComponent";
 
 function App() {
 
@@ -55,6 +56,7 @@ function App() {
                   <Route path="/restaurants/:restid/:foodid" element={<IngredientsComponent/>}/>
                   <Route path="/orders" element={<OrderListComponent/>}/>
                   <Route path="/orders/:orderid" element={<OrderInfoComponent/>}/>
+                  <Route path="/account" element={<AccountComponent/>}/>
               </Routes>
               <OrderModalComponent/>
           </BrowserRouter>
