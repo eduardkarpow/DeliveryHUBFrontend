@@ -5,18 +5,26 @@ import {useAppDispatch, useAppSelector} from "../hooks/ReduxHooks";
 import {setPrice} from "../store/actions/OrdersAction";
 import {ThunkDispatch} from "redux-thunk";
 import {RootState} from "../store";
+import {getAllLocations} from "../store/actions/AccountAction";
 
 function OrderModalComponent() {
 
     const [isOpen, setIsOpen] = useState<boolean>(false);
     const [exists, setExists] = useState<boolean>(false);
     const [isFirst, setIsFirst] = useState<boolean>(true);
+    const [curLocation, setCurLocation] = useState<string>("");
+    const [payByCard, setPayByCard] = useState<boolean>(false);
 
     const {name, location, restaurant_image_href} = useAppSelector(store => store.RestaurantItem.restaurant);
     const menu = useAppSelector(store => store.RestaurantItem.menu);
     const fullPrice = useAppSelector(store => store.Orders.fullPrice);
+    const login = useAppSelector(store => store.Auth.login);
+    const locations = useAppSelector(store => store.Account.locations);
     const dispatch:ThunkDispatch<RootState, unknown, any> = useAppDispatch();
 
+    useEffect(() => {
+        dispatch(getAllLocations(login))
+    },[login]);
     useEffect(() => {
         dispatch(setPrice(menu));
     }, [menu])
@@ -70,7 +78,7 @@ function OrderModalComponent() {
                         <span>pay by card</span>
                         <div className={styles.payment_container}>
                             <label className={styles.switch} htmlFor="checkbox">
-                                <input className={styles.checkbox} id="checkbox" type="checkbox" />
+                                <input className={styles.checkbox} id="checkbox" type="checkbox" onChange={e => setPayByCard(!payByCard)}/>
                                 <div className={[styles.slider, styles.round].join(" ")}></div>
                             </label>
                         </div>
@@ -79,10 +87,12 @@ function OrderModalComponent() {
                     <div className={styles.locationPicker}>
                         <span>location</span>
                         <label htmlFor="location" className={styles.location}>
-                            <input list="browsers"  name="location" />
+                            <input list="browsers"  name="location" value={curLocation} onChange={e => setCurLocation(e.target.value)}/>
                             <datalist id="browsers">
-                                <option value="home">Home</option>
-                                <option value="Work">Work</option>
+                                {locations.map(el =>
+                                    <option value={el.location} key={el.locationName}>{el.locationName}</option>)
+                                }
+
                             </datalist>
                             <div className={styles.arrow}>
                                 <span></span>
@@ -90,7 +100,7 @@ function OrderModalComponent() {
                             </div>
                         </label>
                     </div>
-                    <div className={styles.full_price}>10000 ₽</div>
+                    <div className={styles.full_price}>{fullPrice} ₽</div>
                     <div className={styles.buttons}>
                         <button className={styles.button_next} onClick={e => setIsFirst(true)}>{"< Prev"}</button>
                         <button className={styles.button_next}>{"Submit >"}</button>
