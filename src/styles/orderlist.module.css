@@ -45,13 +45,15 @@
 }
 .buttonWrapper{
     width: 220px;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
 }
 .button{
     border: 2px solid #009db5;
     background-color: #009db5;
     border-radius: 10px;
     color: #ffffff;
-    width: 400px;
     padding: 10px 25px;
     margin-bottom: 5px;
     cursor: pointer;
@@ -71,10 +73,10 @@
     margin-top: 20px;
 }
 .image{
-    width: 15%;
+    height: 70px;
     margin-right: 20px;
 }
 .image>img{
-    width: 100%;
-    height: auto;
+    height: 100%;
+    width: auto;
 }

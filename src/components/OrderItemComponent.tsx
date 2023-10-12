@@ -1,24 +1,25 @@
 import React from 'react';
 import styles from "../styles/orderlist.module.css";
 import {NavLink} from "react-router-dom";
+import {OrderProps} from "../models/OrdersModel";
 
-const OrderItemComponent = () => {
+const OrderItemComponent = (props:OrderProps) => {
     return (
             <div className={styles.order_item}>
                 <div className={styles.info}>
                     <div className={styles.image}>
-                        <img src="https://img.freepik.com/premium-photo/cozy-restaurant-with-people-waiter_175935-230.jpg" alt="restaurant"/>
+                        <img src={`http://localhost:8000/${props.restImage}`} alt="restaurant"/>
                     </div>
                     <div>
-                        <div className={styles.price}>12$</div>
-                        <div className={styles.time}>12:32</div>
-                        <div className={styles.date}>12 September</div>
+                        <div className={styles.price}>{props.fullPrice} ₽</div>
+                        <div className={styles.time}>{props.time.toString()}</div>
+                        <div className={styles.date}>{props.date.toString()}</div>
                     </div>
                 </div>
 
                 <div className={styles.buttonWrapper}>
-                    <NavLink to="/orders/1" className={styles.button}>MORE INFO</NavLink>
-                    <div className={styles.status}>FINISHED</div>
+                    <NavLink to={`/orders/${props.id}`} className={styles.button}>MORE INFO</NavLink>
+                    <div className={styles.status} style={{color: `#${props.statusColor}`}}>{props.status}</div>
                 </div>
             </div>
     );

@@ -2,7 +2,7 @@ import React, {useEffect, useState} from 'react';
 import styles from "../styles/orderModal.module.css";
 import OrderElementComponent from "./OrderElementComponent";
 import {useAppDispatch, useAppSelector} from "../hooks/ReduxHooks";
-import {setPrice} from "../store/actions/OrdersAction";
+import {makeOrder, setPrice} from "../store/actions/OrdersAction";
 import {ThunkDispatch} from "redux-thunk";
 import {RootState} from "../store";
 import {getAllLocations} from "../store/actions/AccountAction";
@@ -15,7 +15,7 @@ function OrderModalComponent() {
     const [curLocation, setCurLocation] = useState<string>("");
     const [payByCard, setPayByCard] = useState<boolean>(false);
 
-    const {name, location, restaurant_image_href} = useAppSelector(store => store.RestaurantItem.restaurant);
+    const {name, location, restaurant_image_href, id_restaurants} = useAppSelector(store => store.RestaurantItem.restaurant);
     const menu = useAppSelector(store => store.RestaurantItem.menu);
     const fullPrice = useAppSelector(store => store.Orders.fullPrice);
     const login = useAppSelector(store => store.Auth.login);
@@ -32,6 +32,11 @@ function OrderModalComponent() {
     useEffect(() => {
         setExists(fullPrice > 0);
     },[fullPrice])
+
+    const make_order = (e:any) => {
+        e.preventDefault();
+        dispatch(makeOrder(menu, id_restaurants, fullPrice, payByCard, login, curLocation));
+    }
 
     return (
         exists?
@@ -103,7 +108,7 @@ function OrderModalComponent() {
                     <div className={styles.full_price}>{fullPrice} ₽</div>
                     <div className={styles.buttons}>
                         <button className={styles.button_next} onClick={e => setIsFirst(true)}>{"< Prev"}</button>
-                        <button className={styles.button_next}>{"Submit >"}</button>
+                        <button className={styles.button_next} onClick={make_order}>{"Submit >"}</button>
                     </div>
                 </div>)
                 }
