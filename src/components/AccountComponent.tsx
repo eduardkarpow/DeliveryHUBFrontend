@@ -4,17 +4,34 @@ import {useAppDispatch, useAppSelector} from "../hooks/ReduxHooks";
 import {ThunkDispatch} from "redux-thunk";
 import {RootState} from "../store";
 import {addLocation, getAllLocations} from "../store/actions/AccountAction";
+import {checkAuth} from "../store/actions/AuthAction";
+import {ErrorHandlerHook} from "../hooks/ErrorHandler";
+import {history} from "../store/index";
+import {removeSQLInjection} from "../hooks/removeSQLInjection";
 
 const AccountComponent = () => {
 
     useEffect(() => {
         dispatch(getAllLocations(login));
+        try{
+            if(isAuth && localStorage.getItem("token")){
+
+            }
+            else if(!isAuth && localStorage.getItem("token")){
+                dispatch(checkAuth());
+            } else{
+                history.push("/login");
+                window.location.reload();
+            }
+        } catch(e:any){
+            ErrorHandlerHook(e);
+        }
     }, []);
 
     const dispatch:ThunkDispatch<RootState, unknown, any> = useAppDispatch();
     const avatarHref = useAppSelector(store => store.Auth.avatarHref)
     const {firstName, lastName, login} = useAppSelector(store => store.Auth);
-
+    const isAuth = useAppSelector(store => store.Auth.isAuth);
 
     const locations = useAppSelector(store => store.Account.locations);
 
@@ -23,6 +40,8 @@ const AccountComponent = () => {
 
     const addRecord = (e:any) => {
         e.preventDefault();
+        setLocation(removeSQLInjection(location));
+        setLocationName(removeSQLInjection(locationName));
         dispatch(addLocation(login, locationName, location));
     }
 
@@ -44,16 +63,16 @@ const AccountComponent = () => {
                 </div>
                 <div className={styles.location_form}>
                     <input type="text"
-                           placeholder="name of location"
+                           placeholder="Название адресса"
                            value={locationName}
                            onChange={(e) => setLocationName(e.target.value)}
                     />
                     <input type="text"
-                           placeholder="address"
+                           placeholder="адресс"
                            value={location}
                            onChange={(e) => setLocation(e.target.value)}
                     />
-                    <button onClick={addRecord}>ADD</button>
+                    <button onClick={addRecord}>ДОБАВИТЬ</button>
                 </div>
             </div>
 

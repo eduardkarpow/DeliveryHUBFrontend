@@ -4,8 +4,11 @@ import OrderElementComponent from "./OrderElementComponent";
 import {useAppDispatch, useAppSelector} from "../hooks/ReduxHooks";
 import {makeOrder, setPrice} from "../store/actions/OrdersAction";
 import {ThunkDispatch} from "redux-thunk";
-import {RootState} from "../store";
+import {history, RootState} from "../store";
 import {getAllLocations} from "../store/actions/AccountAction";
+import {checkAuth} from "../store/actions/AuthAction";
+import {ErrorHandlerHook} from "../hooks/ErrorHandler";
+import {clearMenuActionCreator} from "../store/RestaurantItemReducer";
 
 function OrderModalComponent() {
 
@@ -23,6 +26,16 @@ function OrderModalComponent() {
     const dispatch:ThunkDispatch<RootState, unknown, any> = useAppDispatch();
 
     useEffect(() => {
+        try{
+            if(localStorage.getItem("token")){
+                //dispatch(checkAuth());
+            } else{
+                //history.push("/login");
+
+            }
+        } catch(e:any){
+            ErrorHandlerHook(e);
+        }
         dispatch(getAllLocations(login))
     },[login]);
     useEffect(() => {
@@ -35,7 +48,16 @@ function OrderModalComponent() {
 
     const make_order = (e:any) => {
         e.preventDefault();
+        if(!curLocation){
+            ErrorHandlerHook(new Error("Пожалуйста введите адрес"));
+            return;
+        }
+        console.log(payByCard);
         dispatch(makeOrder(menu, id_restaurants, fullPrice, payByCard, login, curLocation));
+        setExists(false);
+        setIsOpen(false);
+        dispatch(clearMenuActionCreator());
+        setTimeout(() => {window.location.reload()},1000);
     }
 
     return (
@@ -66,7 +88,7 @@ function OrderModalComponent() {
                     </div>
                     <div className={styles.confirm}>
                         <div className={styles.fullPrice}>{fullPrice} ₽</div>
-                        <button className={styles.button_next} onClick={e => setIsFirst(false)}>{"Confirm >"}</button>
+                        <button className={styles.button_next} onClick={e => setIsFirst(false)}>{"Далее >"}</button>
                     </div>
 
                 </div>
@@ -80,17 +102,23 @@ function OrderModalComponent() {
                         </div>
                     </div>
                     <div className={styles.payment}>
-                        <span>pay by card</span>
+                        <span>Оплата по карте</span>
                         <div className={styles.payment_container}>
                             <label className={styles.switch} htmlFor="checkbox">
-                                <input className={styles.checkbox} id="checkbox" type="checkbox" onChange={e => setPayByCard(!payByCard)}/>
+                                <input className={styles.checkbox} id="checkbox" type="checkbox" onChange={e =>
+                                {
+                                    setPayByCard(!payByCard)
+                                    console.log(payByCard)
+                                    return;
+                                }
+                                }/>
                                 <div className={[styles.slider, styles.round].join(" ")}></div>
                             </label>
                         </div>
 
                     </div>
                     <div className={styles.locationPicker}>
-                        <span>location</span>
+                        <span>адрес</span>
                         <label htmlFor="location" className={styles.location}>
                             <input list="browsers"  name="location" value={curLocation} onChange={e => setCurLocation(e.target.value)}/>
                             <datalist id="browsers">
@@ -107,8 +135,8 @@ function OrderModalComponent() {
                     </div>
                     <div className={styles.full_price}>{fullPrice} ₽</div>
                     <div className={styles.buttons}>
-                        <button className={styles.button_next} onClick={e => setIsFirst(true)}>{"< Prev"}</button>
-                        <button className={styles.button_next} onClick={make_order}>{"Submit >"}</button>
+                        <button className={styles.button_next} onClick={e => setIsFirst(true)}>{"< Назад"}</button>
+                        <button className={styles.button_next} onClick={make_order}>{"Далее >"}</button>
                     </div>
                 </div>)
                 }
@@ -117,7 +145,7 @@ function OrderModalComponent() {
             :(
         <div className={styles.container}>
             <button onClick = {e => setIsOpen(true)} className={styles.buttonModal}>
-                <h2 className={styles.caption}>Cart</h2>
+                <h2 className={styles.caption}>Корзина</h2>
             </button>
         </div>)
     :<div></div>

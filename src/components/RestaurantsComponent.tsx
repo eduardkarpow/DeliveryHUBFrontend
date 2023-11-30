@@ -6,6 +6,8 @@ import {useAppDispatch, useAppSelector} from "../hooks/ReduxHooks";
 import {AppDispatch, RootState} from "../store";
 import {getAllRestaurants, getAllSpecializations, getSpecialRestaurants} from "../store/actions/RestaurantsAction";
 import {ThunkDispatch} from "redux-thunk";
+import {checkAuth} from "../store/actions/AuthAction";
+import {ErrorHandlerHook} from "../hooks/ErrorHandler";
 const RestaurantsComponent = () => {
 
     const dispatch:ThunkDispatch<RootState, unknown, any> = useAppDispatch();
@@ -15,7 +17,6 @@ const RestaurantsComponent = () => {
     useEffect(() => {
         dispatch(getAllRestaurants());
         dispatch(getAllSpecializations());
-
     },[])
 
     const addClass = (e:any) => {
@@ -37,9 +38,9 @@ const RestaurantsComponent = () => {
             <div className={styles.prices}>
                 <span onClick={addPrice} id="1">$</span><span onClick={addPrice} id="2">$$</span><span onClick={addPrice} id="3">$$$</span>
             </div>
-            <div className={styles.rating}>
-                <span className={styles.active}>above 4</span><span>above 3</span><span>above 2</span>
-            </div>
+            {/*<div className={styles.rating}>
+                <span className={styles.active}>Выше 4</span><span>Выше 3</span><span>Выше 2</span>
+            </div>*/}
             {restaurants.map((restaurant, index) => <NavLink to={"/restaurants/"+restaurant.id_restaurants}><RestaurantItemComponent
                 image_href={restaurant.restaurant_image_href}
                 name={restaurant.name} rating={restaurant.rating} priceRating={restaurant.price_rating}

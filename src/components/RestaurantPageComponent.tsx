@@ -10,6 +10,7 @@ import {getMenu, getRestaurant} from "../store/actions/RestaurantItemAction";
 import {useParams} from "react-router-dom";
 import {addReview, getAllReviews} from "../store/actions/ReviewsAction";
 import {setPrice} from "../store/actions/OrdersAction";
+import {removeSQLInjection} from "../hooks/removeSQLInjection";
 const RestaurantPageComponent = () => {
 
     const params = useParams();
@@ -26,16 +27,18 @@ const RestaurantPageComponent = () => {
     const menu = useAppSelector(store => store.RestaurantItem.menu);
     const {login, avatarHref} = useAppSelector(store => store.Auth);
     const reviews = useAppSelector(store => store.Reviews.reviews);
+    const isAuth = useAppSelector(store => store.Auth.isAuth);
 
     const add_review = (e:any) => {
         e.preventDefault();
-        dispatch(addReview(text,Number(grade), 0,Number(params.restid), login, avatarHref.slice(22), reviews.length ? reviews[reviews.length-1]["id_reviews"]+1 : 1));
+        setText(removeSQLInjection(text));
+        dispatch(addReview(text,grade, 0,Number(params.restid), login, avatarHref.slice(22), reviews.length ? reviews[reviews.length-1]["id_reviews"]+1 : 1));
         setText("");
-        setGrade("");
+        setGrade(0);
     }
 
     const [text, setText] = useState("");
-    const [grade, setGrade] = useState("");
+    const [grade, setGrade] = useState(0);
 
 
     return (
@@ -45,7 +48,7 @@ const RestaurantPageComponent = () => {
                                       priceRating={restaurant.price_rating} location={restaurant.location}
                                       specs={restaurant.specs}/>
             }
-            <div className={styles.menu_title}>MENU</div>
+            <div className={styles.menu_title}>МЕНЮ</div>
             <div className={styles.menu}>
                 {menu.map((el, index) =>
                     <MenuItemComponent restId={Number(params.restid)} id={el.id}
@@ -53,11 +56,18 @@ const RestaurantPageComponent = () => {
                                        price={el.price} index={index} key={el.id}/>
                 )}
             </div>
-            <div className={styles.menu_title}>REVIEWS</div>
+            <div className={styles.menu_title}>ОТЗЫВЫ</div>
             <div className={styles.add_review}>
                 <textarea name="review" value={text} onChange={e => setText(e.target.value)}></textarea>
-                <input type="text" value={grade} onChange={e => setGrade(e.target.value)}/>
-                <button className={styles.review_button} onClick={add_review}>REVIEW</button>
+                <input type="number" value={grade} onChange={e => {
+                    if(Number(e.target.value) > 5){
+                        setGrade(5)
+                    } else{
+                        setGrade(Number(e.target.value));
+                    }
+                return;}}/>
+                {isAuth ? <button className={styles.review_button} onClick={add_review} >ОПУБЛИКОВАТЬ</button> : null}
+
             </div>
             <div className={styles.reviews}>
                 {reviews.map((el, index) => <ReviewItemComponent key={el.id_reviews} {...el}/>)}

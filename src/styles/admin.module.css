@@ -1,0 +1,51 @@
+.form{
+    margin-left: 10px;
+    margin-right: 20px;
+}
+.restaurant_item{
+    display: flex;
+    margin-bottom: 10px;
+
+}
+
+.image {
+    margin-right: 20px;
+    height: 50px;
+    width: 50px;
+}
+.image>img{
+    width: 100%;
+    height: 100%;
+}
+.row{
+    display: flex;
+}
+section.wrapper{
+    display: flex;
+    margin-top: 70px;
+    color: black;
+}
+.buttons{
+    display: flex;
+    flex-direction: column;
+
+}
+.buttons>a{
+    font-size: 15px;
+    color: black;
+    border: 1px solid black;
+    margin-bottom: 10px;
+}
+.info>div{
+    color: black;
+}
+.form_small{
+    height: 200px;
+}
+.error404{
+    width: 100%;
+    margin-top: 100px;
+    color: #ff0009;
+    font-size: 30px;
+    font-weight: 800;
+}

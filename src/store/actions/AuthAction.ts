@@ -1,14 +1,15 @@
 import {ThunkAction} from "redux-thunk";
-import {RootState} from "../index";
+import {history, RootState} from "../index";
 import {AnyAction} from "redux";
 import {
     authActionCreator,
-    avatarActionCreator,
+    avatarActionCreator, loadingActionCreator,
     loginActionCreator,
     logoutActionCreator,
     registerActionCreator
 } from "../AuthReducer";
 import {Tokens} from "../../models/TokenModel";
+import {ErrorHandlerHook} from "../../hooks/ErrorHandler";
 
 export const testing = ():ThunkAction<void, RootState,unknown,AnyAction> => {
     return async dispatch => {
@@ -40,11 +41,11 @@ export const register = (login:string, password:string, phone:string, firstName:
             }).then(res => {
                 return res.json();
             });
-            dispatch(registerActionCreator(login, password, phone, firstName, lastName));
+            dispatch(registerActionCreator(login, password, phone, firstName, lastName, 0));
             localStorage.setItem("token", tokens.accessToken);
-
-        } catch(e){
-            console.error(e);
+            window.location.reload();
+        } catch(e:any){
+            ErrorHandlerHook(e);
         }
     }
 }
@@ -62,50 +63,64 @@ export const logIn = (login:string, password:string):ThunkAction<void, RootState
                     password
                 })
             }).then(res => res.json());
-            dispatch(loginActionCreator(data.user.login, data.user.password, data.user.phone_number, data.user.first_name, data.user.last_name));
+            dispatch(loginActionCreator(data.user.login, data.user.password, data.user.phone_number, data.user.first_name, data.user.last_name, data.user.is_admin));
             localStorage.setItem("token", data.accessToken);
             dispatch(authActionCreator(true));
-            dispatch(avatarActionCreator("http://localhost:8000/"+data.user.avatar_href));
-        } catch (e){
-            console.error(e);
+            dispatch(avatarActionCreator(data.user.avatar_href));
+        } catch (e:any){
+            ErrorHandlerHook(e);
         }
 
     }
 }
 export const logout = (login:string):ThunkAction<void, RootState,unknown,AnyAction> => {
     return async dispatch => {
-        await fetch("/logout", {
-            method: "POST",
-            headers: {
-                'Accept': 'application/json',
-                'Content-Type': 'application/json'
-            },
-            body: JSON.stringify({
-                login
+        try{
+            await fetch("/logout", {
+                method: "POST",
+                headers: {
+                    'Accept': 'application/json',
+                    'Content-Type': 'application/json'
+                },
+                body: JSON.stringify({
+                    login
+                })
             })
-        })
-        localStorage.removeItem("token");
-        dispatch(logoutActionCreator());
-        dispatch(authActionCreator(false));
+            localStorage.removeItem("token");
+            dispatch(logoutActionCreator());
+            dispatch(authActionCreator(false));
+            window.location.reload();
+        } catch (e:any){
+            ErrorHandlerHook(e);
+        }
+
     }
 }
 export const checkAuth = ():ThunkAction<void, RootState,unknown,AnyAction> => {
     return async dispatch => {
         try{
-            const data = await fetch("/refresh", {
-                method: "GET",
+            const resp = await fetch("/refresh", {
+                method: "POST",
                 headers: {
                     'Accept': 'application/json',
                     'Content-Type': 'application/json'
                 }
-            }).then(res => res.json());
+            });
+            if(resp.status === 402){
+                await setTimeout(() => {
+                    history.push("/login");
+                    window.location.reload();
+                },200)
+                return 1
+            }
+            const data = await resp.json();
 
-            dispatch(loginActionCreator(data.user.login, data.user.password, data.user.phone_number, data.user.first_name, data.user.last_name));
+            dispatch(loginActionCreator(data.user.login, data.user.password, data.user.phone_number, data.user.first_name, data.user.last_name, data.user.is_admin));
             localStorage.setItem("token", data.accessToken);
-            dispatch(avatarActionCreator("http://localhost:8000/"+data.user.avatar_href));
+            dispatch(avatarActionCreator(data.user.avatar_href));
             dispatch(authActionCreator(true));
         } catch(e:any){
-            console.log(e);
+            ErrorHandlerHook(e);
         }
 
     }
@@ -122,10 +137,10 @@ export const uploadImage = (formData:FormData):ThunkAction<void, RootState,unkno
                 method: "POST",
                 body: formData
             }).then(res => res.json())
-            dispatch(avatarActionCreator("http://localhost:8000/"+href.href));
+            dispatch(avatarActionCreator(href.href));
             dispatch(authActionCreator(true));
-        }catch (e){
-            console.log(e);
+        }catch (e:any){
+            ErrorHandlerHook(e);
         }
 
     }

@@ -1,5 +1,5 @@
 import {MenuItemModel, RestaurantItemModel} from "../models/RestaurantItemModel";
-import {GET_MENU, GET_RESTAURANT, RestaurantItemActions} from "../models/RestaurantItemActions";
+import {CLEAR_MENU, GET_MENU, GET_RESTAURANT, RestaurantItemActions} from "../models/RestaurantItemActions";
 import {RestaurantModel} from "../models/RestaurantsModel";
 
 const initialState:RestaurantItemModel = {
@@ -21,6 +21,8 @@ export const RestaurantItemReducer = (state:RestaurantItemModel=initialState, ac
             return {...state, restaurant: action.restaurant};
         case "GET_MENU":
             return {...state, menu: action.menu};
+        case "CLEAR_MENU":
+            return {...state, menu: []};
         default:
             return state;
     }
@@ -28,3 +30,4 @@ export const RestaurantItemReducer = (state:RestaurantItemModel=initialState, ac
 
 export const getRestaurantActionCreator = (restaurant:RestaurantModel):GET_RESTAURANT => {return {type: "GET_RESTAURANT", restaurant: restaurant}};
 export const getMenuActionCreator = (menu:MenuItemModel[]):GET_MENU => {return {type:"GET_MENU", menu: menu}};
+export const clearMenuActionCreator = ():CLEAR_MENU => {return {type:"CLEAR_MENU"}}

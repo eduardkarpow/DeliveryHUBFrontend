@@ -18,7 +18,7 @@ const OrderItemComponent = (props:OrderProps) => {
                 </div>
 
                 <div className={styles.buttonWrapper}>
-                    <NavLink to={`/orders/${props.id}`} className={styles.button}>MORE INFO</NavLink>
+                    <NavLink to={`/orders/${props.id}`} className={styles.button}>Подробная информация</NavLink>
                     <div className={styles.status} style={{color: `#${props.statusColor}`}}>{props.status}</div>
                 </div>
             </div>

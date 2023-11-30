@@ -7,4 +7,5 @@ export interface AuthStateModel{
     isAuth: boolean;
     isLoading: boolean;
     avatarHref: string;
+    isAdmin: number;
 }

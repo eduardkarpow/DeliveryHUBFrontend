@@ -1,4 +1,4 @@
-import React from 'react';
+import React, {useEffect} from 'react';
 import styles from "../styles/navbar.module.css";
 import {NavLink} from "react-router-dom";
 import {useAppDispatch, useAppSelector} from "../hooks/ReduxHooks";
@@ -13,6 +13,9 @@ const NavbarComponent = () => {
     const login:string = useAppSelector(store => store.Auth.login);
     const dispatch:ThunkDispatch<RootState, unknown, any> = useAppDispatch();
     const avatar = useAppSelector(store => store.Auth.avatarHref);
+    const isAdmin = useAppSelector(store => store.Auth.isAdmin);
+
+
 
     const Logout = (e:any) => {
         e.preventDefault();
@@ -23,8 +26,9 @@ const NavbarComponent = () => {
         <div className={styles.wrapper}>
             <div className={styles.logo}>Delivery<span>HUB</span></div>
             <div className={styles.content}>
-                <NavLink to="/restaurants">Restaurants</NavLink>
-                <NavLink to="/orders">Orders</NavLink>
+                <NavLink to="/restaurants">Рестораны</NavLink>
+                <NavLink to="/orders">Заказы</NavLink>
+                {isAdmin ? <NavLink to="/admin/restaurants">Админка</NavLink> : <div></div>}
             </div>
                 {isAuth ?
                     <div className={styles.account}>
@@ -37,12 +41,12 @@ const NavbarComponent = () => {
 
                         </div>
                         
-                        <NavLink className={styles.logout} onClick={Logout} to="/login">Logout</NavLink>
+                        <NavLink className={styles.logout} onClick={Logout} to="/login">Выход</NavLink>
                     </div>
                     :
                     <div className={styles.auth}>
-                        <NavLink to="/register">Register</NavLink>
-                        <NavLink to="/login">Login</NavLink>
+                        <NavLink to="/register">Регистрация</NavLink>
+                        <NavLink to="/login">Вход</NavLink>
                     </div>
 
                 }

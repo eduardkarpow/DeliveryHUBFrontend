@@ -12,6 +12,7 @@ const MenuItemComponent = (props:MenuProps) => {
     const menu = useAppSelector(store => store.RestaurantItem.menu);
     const quantity = useAppSelector(store => store.RestaurantItem.menu[props.index].amount);
     const dispatch:ThunkDispatch<RootState, unknown, any> = useAppDispatch();
+    const isAuth = useAppSelector(store => store.Auth.isAuth);
 
     return (
         <div className={styles.menu_item}>
@@ -27,7 +28,7 @@ const MenuItemComponent = (props:MenuProps) => {
                         <button className={styles.button} onClick={e => dispatch(decrement(props.index, menu))}>-</button>
                     </div>
                     :
-                    <button className={styles.button} onClick={e => dispatch(increment(props.index, menu))}>+ Order</button>
+                    isAuth ? <button className={styles.button} onClick={e => dispatch(increment(props.index, menu))}>+ Заказать</button> : null
             }
         </div>
     );

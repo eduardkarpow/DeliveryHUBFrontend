@@ -4,8 +4,11 @@ import OrderItemComponent from "./OrderItemComponent";
 import {useAppDispatch, useAppSelector} from "../hooks/ReduxHooks";
 import {Order} from "../models/OrdersModel";
 import {ThunkDispatch} from "redux-thunk";
-import {RootState} from "../store";
+import {history, RootState} from "../store";
 import {getAllOrders} from "../store/actions/OrdersAction";
+import {checkAuth} from "../store/actions/AuthAction";
+import {ErrorHandlerHook} from "../hooks/ErrorHandler";
+import {authActionCreator} from "../store/AuthReducer";
 const OrderListComponent = () => {
 
 
@@ -14,13 +17,27 @@ const OrderListComponent = () => {
 
     useEffect(() => {
         dispatch(getAllOrders(login));
+        try{
+            if(isAuth && localStorage.getItem("token")){
+
+            }
+            else if(!isAuth && localStorage.getItem("token")){
+                dispatch(checkAuth());
+            } else{
+                history.push("/login");
+                window.location.reload();
+            }
+        } catch(e:any){
+            ErrorHandlerHook(e);
+        }
     }, [login])
 
     const orders:Order[] = useAppSelector(store=>store.Orders.orders);
+    const isAuth = useAppSelector(store => store.Auth.isAuth);
 
     return (
         <div className={styles.wrapper}>
-            <div className={styles.caption}>YOUR ORDERS</div>
+            <div className={styles.caption}>ВАШИ ЗАКАЗЫ</div>
             <div className={styles.order_list}>
                 {orders.map((el:Order) => <OrderItemComponent id={el.id_orders} fullPrice={el.price}
                                                 status={el.order_status} statusColor={el.status_color}

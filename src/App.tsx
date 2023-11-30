@@ -17,24 +17,25 @@ import {useAppDispatch, useAppSelector} from "./hooks/ReduxHooks";
 import {checkAuth} from "./store/actions/AuthAction";
 import OrderModalComponent from "./components/OrderModalComponent";
 import AccountComponent from "./components/AccountComponent";
+import {ErrorHandlerHook} from "./hooks/ErrorHandler";
+import AdminRestaurantsComponent from "./components/AdminRestaurantsComponent";
+import AdminPickerComponent from "./components/AdminPickerComponent";
+import AdminFoodComponent from "./components/AdminFoodComponent";
+import AdminIngredientsComponent from "./components/AdminIngredientsComponent";
+import AdminRouteComponent from "./AdminRouteComponent";
 
 function App() {
 
     const dispatch:ThunkDispatch<RootState, unknown, any> = useAppDispatch();
 
-    //const navigate = useNavigate();
+    const isAuth = useAppSelector(store => store.Auth.isAuth);
 
     useEffect(() => {
-        try{
-            if(localStorage.getItem("token")){
-                dispatch(checkAuth());
+        setTimeout(() => {
+            if(!isAuth && localStorage.getItem("token")){
+                dispatch(checkAuth())
             }
-        } catch(e){
-            setTimeout(() => {
-                window.location.replace('http://localhost:3000/login');
-            }, 1000);
-
-        }
+        }, 500)
 
     }, [])
 
@@ -57,6 +58,10 @@ function App() {
                   <Route path="/orders" element={<OrderListComponent/>}/>
                   <Route path="/orders/:orderid" element={<OrderInfoComponent/>}/>
                   <Route path="/account" element={<AccountComponent/>}/>
+                  <Route path="/admin/restaurants" element={AdminRouteComponent(AdminRestaurantsComponent)}/>
+                  <Route path="/admin/food/:restid" element={AdminRouteComponent(AdminFoodComponent)}/>
+                  <Route path="/admin/ingredients/:foodid" element={AdminRouteComponent(AdminIngredientsComponent)}/>
+                  <Route path="/admin" element={<AdminRouteComponent/>}/>
               </Routes>
               <OrderModalComponent/>
           </BrowserRouter>

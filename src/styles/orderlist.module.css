@@ -44,7 +44,7 @@
     color: gray;
 }
 .buttonWrapper{
-    width: 220px;
+    width: 320px;
     display: flex;
     flex-direction: column;
     align-items: center;

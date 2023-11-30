@@ -6,6 +6,7 @@ export interface LOGIN{
     phone: string;
     firstName: string;
     lastName: string;
+    isAdmin: number;
 }
 export interface REGISTER{
     type: "REGISTER";
@@ -14,6 +15,7 @@ export interface REGISTER{
     phone: string;
     firstName: string;
     lastName: string;
+    isAdmin: number;
 }
 export interface LOGOUT{
     type: "LOGOUT";

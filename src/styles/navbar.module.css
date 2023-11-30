@@ -17,11 +17,12 @@
     color: #fff;
 }
 .logo>span{
-    display: inline-block;
+    display: inline;
     padding: 5px;
     background-color: #00D225;
     opacity: .9;
     border-radius: 5px;
+    margin-right: 15px;
 }
 a{
     color: #ffffff;
@@ -30,7 +31,7 @@ a{
 }
 .content{
     display: flex;
-    width: 250px;
+    width: 400px;
     margin-right: 40%;
     justify-content: space-between;
 }

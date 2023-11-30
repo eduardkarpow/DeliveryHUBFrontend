@@ -11,6 +11,7 @@ const root = ReactDOM.createRoot(
   document.getElementById('root') as HTMLElement
 );
 const BASE_URL = "http://localhost:8000";
+// @ts-ignore
 const unregister = FetchIntercept.register({
     request: (url, config) => {
 
@@ -25,23 +26,39 @@ const unregister = FetchIntercept.register({
         return [BASE_URL+url, updatedConfig];
     },
     requestError: function (error) {
+        console.log("req error");
         return error;
     },
 
-    response: function (response) {
-        return response;
+    // @ts-ignore
+    response: async function (resp) {
+        /*if(resp.status == 403){
+            console.log(resp);
+        }
+        console.log(resp);
+        const originalRequest = resp.request;
+        const originalUrl = resp.url;
+        if(resp.status === 403){
+            const data = await fetch("/refresh", {
+                method: "POST",
+                headers: {
+                    'Accept': 'application/json',
+                    'Content-Type': 'application/json'
+                }
+            });
+            //if(!data){
+            //    return resp;
+            //}
+            //localStorage.setItem("token", data.accessToken);
+            return fetch(originalUrl, originalRequest);
+        }*/
+        return resp;
     },
 
     responseError: async function (error) {
-        const originalRequest = error.config;
-        const originalUrl = error.url;
-        if(error.response.status === 401){
-            const data = await fetch("/refresh", {
-                method: "GET"
-            }).then(res => res.json());
-            localStorage.setItem("token", data.accessToken);
-            return fetch(originalUrl, originalRequest);
-        }
+        console.log(error);
+        console.log("error");
+
         return error;
     },
 })
