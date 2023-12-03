@@ -3,12 +3,13 @@ import {RootState} from "../index";
 import {AnyAction} from "redux";
 import {ErrorHandlerHook} from "../../hooks/ErrorHandler";
 import {authActionCreator, avatarActionCreator} from "../AuthReducer";
-import {getRestsActionCreator} from "../AdminRestaurantsReducer";
+import {getRestsActionCreator, updateRestsActionCreator} from "../AdminRestaurantsReducer";
 import {deleteFoodActionCreator, getFoodsActionCreator} from "../AdminFoodReducer";
 import {deleteIngredientActionCreator, getIngredientsActionCreator} from "../AdminIngredientsReducer";
 import {AdminIngredient} from "../../models/AdminIngredientsModel";
 import {AdminFood} from "../../models/AdminFoodModel";
 import {getAllActionCreator} from "../AdminOrdersReducer";
+import {AdminRestaurant} from "../../models/AdminRestaurantsModel";
 
 export const AddRestaurant = (name:string, location:string, priceRating:number, formData:FormData):ThunkAction<void, RootState,unknown,AnyAction> => {
     return async dispatch => {
@@ -223,6 +224,31 @@ export const GetOrders = ():ThunkAction<void, RootState,unknown,AnyAction> => {
             }).then(res => res.json());
             dispatch(getAllActionCreator(response.orders, response.statuses));
         } catch (e:any){
+            ErrorHandlerHook(e);
+        }
+    }
+}
+export const UpdateRestaurant = (restaurants:AdminRestaurant[], restId:number):ThunkAction<void, RootState,unknown,AnyAction> => {
+    return async dispatch => {
+        try {
+            const response = await fetch("/updateRestaurant", {
+                method: "POST",
+                headers: {
+                    'Accept': 'application/json',
+                    'Content-Type': 'application/json'
+                },
+                body: JSON.stringify({
+                    restId
+                })
+            });
+            restaurants = restaurants.map(el => {
+                if (el.id === restId) {
+                    el.restVisible = 0;
+                }
+                return el
+            });
+            dispatch(updateRestsActionCreator(restaurants));
+        } catch (e: any) {
             ErrorHandlerHook(e);
         }
     }

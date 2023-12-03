@@ -10,7 +10,8 @@ const initialState:RestaurantItemModel = {
         price_rating: 0,
         name: "",
         restaurant_image_href: "",
-        specs: []
+        specs: [],
+        restVisible: 1
     },
     menu: []
 }

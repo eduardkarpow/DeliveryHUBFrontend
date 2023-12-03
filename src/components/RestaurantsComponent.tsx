@@ -62,7 +62,7 @@ const RestaurantsComponent = () => {
                 <span className={styles.active}>Выше 4</span><span>Выше 3</span><span>Выше 2</span>
             </div>*/}
             {restaurants.map((restaurant, index) => {
-                if((!specialization || restaurant.specs.some(spec => spec === specialization)) && (!priceRating || restaurant.price_rating === priceRating) && restaurant.name.toLowerCase().includes(search.toLowerCase())) {
+                if((!specialization || restaurant.specs.some(spec => spec === specialization)) && (!priceRating || restaurant.price_rating === priceRating) && restaurant.name.toLowerCase().includes(search.toLowerCase()) && restaurant.restVisible) {
                     return <NavLink to={"/restaurants/" + restaurant.id_restaurants}><RestaurantItemComponent
                         image_href={restaurant.restaurant_image_href}
                         name={restaurant.name} rating={restaurant.rating} priceRating={restaurant.price_rating}

@@ -11,6 +11,7 @@ export interface RestaurantModel{
     price_rating: number;
     name: string;
     restaurant_image_href: string;
+    restVisible: number;
     specs: string[];
 }
 export interface SpecializationModel{

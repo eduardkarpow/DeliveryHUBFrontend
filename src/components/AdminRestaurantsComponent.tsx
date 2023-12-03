@@ -4,7 +4,7 @@ import {loadingActionCreator} from "../store/AuthReducer";
 import {useAppDispatch, useAppSelector} from "../hooks/ReduxHooks";
 import {ThunkDispatch} from "redux-thunk";
 import {RootState} from "../store";
-import {AddRestaurant, GetRestaurants} from "../store/actions/AdminAction";
+import {AddRestaurant, GetRestaurants, UpdateRestaurant} from "../store/actions/AdminAction";
 import {ErrorHandlerHook} from "../hooks/ErrorHandler";
 import styles from "../styles/admin.module.css";
 import {NavLink} from "react-router-dom";
@@ -37,7 +37,12 @@ const AdminRestaurantsComponent = () => {
             dispatch(AddRestaurant(name, location, priceRating, formData));
         }
     }
-
+    const updateRestaurant = (restId:number) => {
+        return (event:any) => {
+            event.preventDefault();
+            dispatch(UpdateRestaurant(rests, restId));
+        }
+    }
 
     return (
         <section className={styles.wrapper}>
@@ -75,6 +80,7 @@ const AdminRestaurantsComponent = () => {
                         <div className={styles.caption}>{el.name}</div>
                         <div className={styles.id}>id: {el.id}</div>
                     </div>
+                        {el.restVisible ? <button className={styles.closeButton} onClick={updateRestaurant(el.id)}>Удалить</button> : null}
                     </NavLink>
                 )}
 
