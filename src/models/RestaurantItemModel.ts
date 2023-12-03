@@ -15,6 +15,7 @@ export interface MenuItemModel{
     fats: number;
     carbohydrates: number;
     image_href: string;
+    isVisible: number;
     amount: number;
 }
 export interface MenuProps{

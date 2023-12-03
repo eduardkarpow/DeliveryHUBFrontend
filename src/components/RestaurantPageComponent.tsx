@@ -4,12 +4,11 @@ import RestaurantItemComponent from "./RestaurantItemComponent";
 import MenuItemComponent from "./MenuItemComponent";
 import ReviewItemComponent from "./ReviewItemComponent";
 import {useAppDispatch, useAppSelector} from "../hooks/ReduxHooks";
-import {RootState, store} from "../store";
+import {RootState} from "../store";
 import {ThunkDispatch} from "redux-thunk";
 import {getMenu, getRestaurant} from "../store/actions/RestaurantItemAction";
 import {useParams} from "react-router-dom";
 import {addReview, getAllReviews} from "../store/actions/ReviewsAction";
-import {setPrice} from "../store/actions/OrdersAction";
 import {removeSQLInjection} from "../hooks/removeSQLInjection";
 const RestaurantPageComponent = () => {
 
@@ -50,10 +49,17 @@ const RestaurantPageComponent = () => {
             }
             <div className={styles.menu_title}>МЕНЮ</div>
             <div className={styles.menu}>
-                {menu.map((el, index) =>
-                    <MenuItemComponent restId={Number(params.restid)} id={el.id}
-                                       image_href={el.image_href} name={el.name}
-                                       price={el.price} index={index} key={el.id}/>
+                {menu.map((el, index) => {
+
+                        if (el.isVisible) {
+                            return <MenuItemComponent restId={Number(params.restid)} id={el.id}
+                                                      image_href={el.image_href} name={el.name}
+                                                      price={el.price} index={index} key={el.id}/>
+
+                        } else{
+                            return null;
+                        }
+                    }
                 )}
             </div>
             <div className={styles.menu_title}>ОТЗЫВЫ</div>

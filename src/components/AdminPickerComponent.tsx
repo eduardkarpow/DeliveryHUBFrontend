@@ -6,9 +6,8 @@ const AdminPickerComponent = () => {
     return (
         <div className={styles.wrapper}>
             <div className={styles.buttons}>
-                <NavLink to={"/admin/restaurants"}>добавить ресторан</NavLink>
-                <NavLink to={"/admin/food"}>добавить меню</NavLink>
-                <NavLink to={"/admin/ingredients"}>добавить ингридиент</NavLink>
+                <NavLink to={"/admin/restaurants"}>админка ресторанов</NavLink>
+                <NavLink to={"/admin/orders"}>админка заказов</NavLink>
             </div>
             <div className={styles.restaurant_item}>
                 <div className={styles.image}><img src="http://localhost:8000/images/restaurants/7swTElXJfHХинкали ресторан.jpg" alt=""/></div>

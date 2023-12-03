@@ -1,5 +1,6 @@
 export interface AdminIngredientsModel{
-    ingredients: AdminIngredient[]
+    ingredients: AdminIngredient[],
+    foodIngredients: AdminIngredient[],
 }
 export type AdminIngredient = {
     id: number;

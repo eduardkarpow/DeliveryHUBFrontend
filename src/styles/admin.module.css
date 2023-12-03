@@ -5,7 +5,7 @@
 .restaurant_item{
     display: flex;
     margin-bottom: 10px;
-
+    align-items: center;
 }
 
 .image {
@@ -48,4 +48,14 @@ section.wrapper{
     color: #ff0009;
     font-size: 30px;
     font-weight: 800;
+}
+.ingredients_col{
+    margin-left: 20px;
+}
+.closeButton{
+    background-color: #ff0009;
+    font-size: 14px;
+    margin-left: 15px;
+    margin-top: 0;
+    padding: 4px 10px;
 }

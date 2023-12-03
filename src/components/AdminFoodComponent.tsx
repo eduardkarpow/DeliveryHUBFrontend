@@ -5,7 +5,7 @@ import {useAppDispatch, useAppSelector} from "../hooks/ReduxHooks";
 import styles from "../styles/admin.module.css";
 import {NavLink, useParams} from "react-router-dom";
 import {getFoodsActionCreator} from "../store/AdminFoodReducer";
-import {AddFood, AddRestaurant, GetFoods} from "../store/actions/AdminAction";
+import {AddFood, AddRestaurant, deleteFoodItem, GetFoods} from "../store/actions/AdminAction";
 import {ErrorHandlerHook} from "../hooks/ErrorHandler";
 
 const AdminFoodComponent = () => {
@@ -40,6 +40,11 @@ const AdminFoodComponent = () => {
             // @ts-ignore
             formData.append("image", filePicker.current.files[0]);
             dispatch(AddFood(name, price, weight, calories, fats, proteins, carbohydrates, Number(params.restid), formData));
+        }
+    }
+    const deleteFood = (foodId: number) => {
+        return function (){
+            dispatch(deleteFoodItem(foods, foodId));
         }
     }
 
@@ -104,18 +109,24 @@ const AdminFoodComponent = () => {
             </form>
             <div>
                 <div className={styles.buttons}>
-                    <NavLink to={"/admin/restaurants"}>добавить ресторан</NavLink>
-                    <NavLink to={"/admin/food"}>добавить меню</NavLink>
-                    <NavLink to={"/admin/ingredients"}>добавить ингридиент</NavLink>
+                    <NavLink to={"/admin/restaurants"}>админка ресторанов</NavLink>
+                    <NavLink to={"/admin/orders"}>админка заказов</NavLink>
                 </div>
                 {foods.map(el =>
-                    <NavLink to={`/admin/ingredients/${el.id}`} className={styles.restaurant_item}>
-                        <div className={styles.image}><img src={`http://localhost:8000/${el.image}`} alt=""/></div>
-                        <div className={styles.info}>
-                            <div className={styles.caption}>{el.name}</div>
-                            <div className={styles.id}>id: {el.id}</div>
+                {
+                    if(el.isVisible) {
+                        return <div  className={styles.restaurant_item}>
+                            <NavLink to={`/admin/ingredients/${el.id}`} className={styles.image}><img src={`http://localhost:8000/${el.image}`} alt=""/></NavLink>
+                            <div className={styles.info}>
+                                <div className={styles.caption}>{el.name}</div>
+                                <div className={styles.id}>id: {el.id}</div>
+                            </div>
+                            <button className={styles.closeButton} onClick={deleteFood(el.id)}>Удалить</button>
                         </div>
-                    </NavLink>
+                    } else{
+                        return null;
+                    }
+                }
                 )}
 
             </div>

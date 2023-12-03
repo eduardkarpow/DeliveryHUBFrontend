@@ -4,5 +4,6 @@ export interface AdminFoodModel{
 export type AdminFood = {
     name: string,
     image: number,
+    isVisible: number,
     id: number,
 }

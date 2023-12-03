@@ -23,6 +23,7 @@ import AdminPickerComponent from "./components/AdminPickerComponent";
 import AdminFoodComponent from "./components/AdminFoodComponent";
 import AdminIngredientsComponent from "./components/AdminIngredientsComponent";
 import AdminRouteComponent from "./AdminRouteComponent";
+import AdminOrdersComponent from "./components/AdminOrdersComponent";
 
 function App() {
 
@@ -61,6 +62,7 @@ function App() {
                   <Route path="/admin/restaurants" element={AdminRouteComponent(AdminRestaurantsComponent)}/>
                   <Route path="/admin/food/:restid" element={AdminRouteComponent(AdminFoodComponent)}/>
                   <Route path="/admin/ingredients/:foodid" element={AdminRouteComponent(AdminIngredientsComponent)}/>
+                  <Route path="/admin/orders" element={AdminRouteComponent(AdminOrdersComponent)}/>
                   <Route path="/admin" element={<AdminRouteComponent/>}/>
               </Routes>
               <OrderModalComponent/>

@@ -12,6 +12,7 @@ import {IngredientsReducer} from "./IngredientsReduecer";
 import {AdminRestaurantsReducer} from "./AdminRestaurantsReducer";
 import {AdminFoodReducer} from "./AdminFoodReducer";
 import {AdminIngredientsReducer} from "./AdminIngredientsReducer";
+import {AdminOrdersReducer} from "./AdminOrdersReducer";
 
 export const history = createHistory();
 
@@ -27,7 +28,8 @@ const rootReducer = combineReducers({
     Ingredients: IngredientsReducer,
     AdminRestaurants: AdminRestaurantsReducer,
     AdminFood: AdminFoodReducer,
-    AdminIngredients: AdminIngredientsReducer
+    AdminIngredients: AdminIngredientsReducer,
+    AdminOrders: AdminOrdersReducer,
 });
 
 

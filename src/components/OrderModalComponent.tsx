@@ -57,7 +57,11 @@ function OrderModalComponent() {
         setExists(false);
         setIsOpen(false);
         dispatch(clearMenuActionCreator());
-        setTimeout(() => {window.location.reload()},1000);
+
+        setTimeout(() => {
+            history.push("/orders");
+            window.location.reload()
+        },400);
     }
 
     return (

@@ -93,3 +93,22 @@ span.active{
     font-size: 18px;
     margin-top: 10px;
 }
+.clear{
+    margin-top: 20px;
+}
+.search{
+    margin-top: 20px;
+    display: flex;
+    align-items: center;
+}
+.search_input{
+    display: block;
+    width: 300px;
+    margin-bottom: 0;
+}
+.search_button{
+    display: block;
+    padding: 10px 20px;
+    margin-left: 10px;
+    margin-top: 0;
+}

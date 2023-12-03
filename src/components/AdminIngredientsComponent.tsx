@@ -4,7 +4,13 @@ import {NavLink, useParams} from "react-router-dom";
 import {ThunkDispatch} from "redux-thunk";
 import {RootState} from "../store";
 import {useAppDispatch, useAppSelector} from "../hooks/ReduxHooks";
-import {AddExistingIngredient, AddFood, AddIngredient, GetIngredients} from "../store/actions/AdminAction";
+import {
+    AddExistingIngredient,
+    AddFood,
+    AddIngredient,
+    DeleteIngredient,
+    GetIngredients
+} from "../store/actions/AdminAction";
 import {ErrorHandlerHook} from "../hooks/ErrorHandler";
 
 const AdminIngredientsComponent = () => {
@@ -16,14 +22,15 @@ const AdminIngredientsComponent = () => {
     const params = useParams();
 
     useEffect(() => {
-        dispatch(GetIngredients());
+        dispatch(GetIngredients(Number(params.foodid)));
     }, [])
 
     const ingrs = useAppSelector(store => store.AdminIngredients.ingredients);
-
+    const foodIngrs = useAppSelector(store => store.AdminIngredients.foodIngredients);
     const addExistingIngredient = (event:any) => {
         event.preventDefault();
         dispatch(AddExistingIngredient(Number(params.foodid), ingrId));
+        dispatch(GetIngredients(Number(params.foodid)));
     }
     const addIngredient = (event:any) => {
         event.preventDefault();
@@ -36,6 +43,12 @@ const AdminIngredientsComponent = () => {
             // @ts-ignore
             formData.append("image", filePicker.current.files[0]);
             dispatch(AddIngredient(name, Number(params.foodid), formData));
+        }
+        dispatch(GetIngredients(Number(params.foodid)));
+    }
+    const deleteIngredient = (ingredientId:number) => {
+        return function inner() {
+            dispatch(DeleteIngredient(foodIngrs, Number(params.foodid), ingredientId));
         }
     }
 
@@ -68,21 +81,34 @@ const AdminIngredientsComponent = () => {
                     <button onClick = {addIngredient}>Добавить</button>
                 </form>
             </div>
-
             <div>
+                <div>Добавленные ингредиенты</div>
                 <div className={styles.buttons}>
-                    <NavLink to={"/admin/restaurants"}>добавить ресторан</NavLink>
-                    <NavLink to={"/admin/food"}>добавить меню</NavLink>
-                    <NavLink to={"/admin/ingredients"}>добавить ингридиент</NavLink>
+                    <NavLink to={"/admin/restaurants"}>админка ресторанов</NavLink>
+                    <NavLink to={"/admin/orders"}>админка заказов</NavLink>
                 </div>
-                {ingrs.map(el =>
-                    <NavLink to={`/admin/ingredients/${el.id}`} className={styles.restaurant_item}>
+                {foodIngrs.map(el =>
+                    <div  className={styles.restaurant_item}>
                         <div className={styles.image}><img src={`http://localhost:8000/${el.image}`} alt=""/></div>
                         <div className={styles.info}>
                             <div className={styles.caption}>{el.name}</div>
                             <div className={styles.id}>id: {el.id}</div>
                         </div>
-                    </NavLink>
+                        <button className={styles.closeButton} onClick={deleteIngredient(el.id)}>Удалить</button>
+                    </div>
+                )}
+
+            </div>
+            <div className={styles.ingredients_col}>
+                <div>Доступные ингредиенты</div>
+                {ingrs.map(el =>
+                    <div className={styles.restaurant_item}>
+                        <div className={styles.image}><img src={`http://localhost:8000/${el.image}`} alt=""/></div>
+                        <div className={styles.info}>
+                            <div className={styles.caption}>{el.name}</div>
+                            <div className={styles.id}>id: {el.id}</div>
+                        </div>
+                    </div>
                 )}
 
             </div>

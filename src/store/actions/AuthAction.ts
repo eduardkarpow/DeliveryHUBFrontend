@@ -10,6 +10,8 @@ import {
 } from "../AuthReducer";
 import {Tokens} from "../../models/TokenModel";
 import {ErrorHandlerHook} from "../../hooks/ErrorHandler";
+import {AdminOrder} from "../../models/AdminOrdersModel";
+import {updateOrderActionCreator} from "../AdminOrdersReducer";
 
 export const testing = ():ThunkAction<void, RootState,unknown,AnyAction> => {
     return async dispatch => {
@@ -108,8 +110,11 @@ export const checkAuth = ():ThunkAction<void, RootState,unknown,AnyAction> => {
             });
             if(resp.status === 402){
                 await setTimeout(() => {
-                    history.push("/login");
-                    window.location.reload();
+                    if(!window.location.pathname.includes("/login")){
+                        history.push("/login");
+                        window.location.reload();
+                    }
+
                 },200)
                 return 1
             }
@@ -143,5 +148,31 @@ export const uploadImage = (formData:FormData):ThunkAction<void, RootState,unkno
             ErrorHandlerHook(e);
         }
 
+    }
+}
+export const updateOrderStatus = (orders:AdminOrder[], id:number, status:string):ThunkAction<void, RootState,unknown,AnyAction> => {
+    return async dispatch => {
+        try {
+            await fetch("/updateOrderStatus", {
+                method: "POST",
+                headers: {
+                    'Accept': 'application/json',
+                    'Content-Type': 'application/json'
+                },
+                body: JSON.stringify({
+                    id,
+                    status
+                })
+            })
+        } catch (e: any) {
+            ErrorHandlerHook(e);
+        }
+        orders = orders.map(el => {
+            if (el.id === id) {
+                el.status = status
+            }
+            return el
+        })
+        dispatch(updateOrderActionCreator(orders));
     }
 }

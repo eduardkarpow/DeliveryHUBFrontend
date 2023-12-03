@@ -1,5 +1,4 @@
-import {AccountStateModel, LocationModel} from "../models/AccountModel";
-import {AccountActions, ADD_LOCATION, GET_LOCATIONS} from "../models/AccountActions";
+
 import {AdminRestaurant, AdminRestaurantsModel} from "../models/AdminRestaurantsModel";
 import {AdminRestaurantsActions, GET_RESTS} from "../models/AdminRestaurantsActions";
 

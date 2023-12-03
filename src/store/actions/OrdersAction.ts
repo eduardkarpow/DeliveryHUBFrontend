@@ -21,7 +21,9 @@ export const makeOrder = (menu:MenuItemModel[], restId:number, fullPrice:number,
     return async dispatch => {
         try{
             const date = new Date();
+            date.setHours(date.getHours()+6);
             const datetime = date.toISOString().slice(0, 19).replace('T', '').replaceAll("-", "").replaceAll(":", "");
+
             const paymentMethod = payByCard ? 1 : 0;
             const order:any = await fetch("/addOrder", {
                 method: "POST",
@@ -30,7 +32,7 @@ export const makeOrder = (menu:MenuItemModel[], restId:number, fullPrice:number,
                     'Content-Type': 'application/json'
                 },
                 body: JSON.stringify({
-                    price: fullPrice,
+                    price: 0,
                     paymentMethod,
                     location,
                     login,
@@ -64,7 +66,7 @@ export const makeOrder = (menu:MenuItemModel[], restId:number, fullPrice:number,
 export const getAllOrders = (login:string):ThunkAction<void, RootState,unknown,AnyAction> => {
     return async dispatch => {
         try{
-            const orders:Order[] = await fetch("/getOrders", {
+            let orders:Order[] = await fetch("/getOrders", {
                 method: "POST",
                 headers: {
                     'Accept': 'application/json',
@@ -74,6 +76,7 @@ export const getAllOrders = (login:string):ThunkAction<void, RootState,unknown,A
                     login
                 })
             }).then(res => res.json());
+            orders = orders.sort((a, b) => Date.parse(b.datetime) - Date.parse(a.datetime));
             dispatch(getAllOrdersActionCreator(orders));
         } catch (e:any){
             ErrorHandlerHook(e);
