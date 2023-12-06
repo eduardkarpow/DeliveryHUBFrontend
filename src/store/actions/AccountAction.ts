@@ -8,15 +8,8 @@ import {ErrorHandlerHook} from "../../hooks/ErrorHandler";
 export const getAllLocations = (login:string):ThunkAction<void, RootState, unknown, AnyAction> => {
     return async dispatch => {
         try{
-            const locations:LocationModel[] = await fetch("/getLocations", {
-                method: "POST",
-                headers: {
-                    'Accept': 'application/json',
-                    'Content-Type': 'application/json'
-                },
-                body: JSON.stringify({
-                    login
-                })
+            const locations:LocationModel[] = await fetch(`/getLocations/?login=${login}`, {
+                method: "GET"
             }).then(res => res.json());
             dispatch(getLocationsActionCreator(locations));
         } catch(e:any){

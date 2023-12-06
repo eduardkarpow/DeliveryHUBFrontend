@@ -2,7 +2,6 @@ import {ThunkAction} from "redux-thunk";
 import {RootState} from "../index";
 import {AnyAction} from "redux";
 import {ErrorHandlerHook} from "../../hooks/ErrorHandler";
-import {authActionCreator, avatarActionCreator} from "../AuthReducer";
 import {getRestsActionCreator, updateRestsActionCreator} from "../AdminRestaurantsReducer";
 import {deleteFoodActionCreator, getFoodsActionCreator} from "../AdminFoodReducer";
 import {deleteIngredientActionCreator, getIngredientsActionCreator} from "../AdminIngredientsReducer";
@@ -97,15 +96,8 @@ export const GetRestaurants = ():ThunkAction<void, RootState,unknown,AnyAction> 
 export const GetFoods = (restId:number):ThunkAction<void, RootState,unknown,AnyAction> => {
     return async dispatch => {
         try{
-            const response = await fetch("/getFoods", {
-                method: "POST",
-                headers: {
-                    'Accept': 'application/json',
-                    'Content-Type': 'application/json'
-                },
-                body: JSON.stringify({
-                    restId
-                })
+            const response = await fetch(`/getFoods/?restId=${restId}`, {
+                method: "GET"
             }).then(res => res.json());
             dispatch(getFoodsActionCreator(response));
         } catch (e:any){
@@ -141,15 +133,8 @@ export const deleteFoodItem = (foods:AdminFood[], foodId:number):ThunkAction<voi
 export const GetIngredients = (foodId:number):ThunkAction<void, RootState,unknown,AnyAction> => {
     return async dispatch => {
         try{
-            const response = await fetch("/getIngredients", {
-                method: "POST",
-                headers: {
-                    'Accept': 'application/json',
-                    'Content-Type': 'application/json'
-                },
-                body: JSON.stringify({
-                    foodId
-                })
+            const response = await fetch(`/getIngredients/?foodId=${foodId}`, {
+                method: "GET"
             }).then(res => res.json());
             dispatch(getIngredientsActionCreator(response.ingredients, response.foodIngredients));
         } catch (e:any){
@@ -201,16 +186,8 @@ export const AddIngredient = (name:string, foodId:number, formData:FormData):Thu
 }
 export const DeleteIngredient = (ingredients:AdminIngredient[] ,foodId:number, ingredientId:number):ThunkAction<void, RootState,unknown,AnyAction> => {
     return async dispatch => {
-        const response = await fetch("/deleteIngredient", {
-            method: "POST",
-            headers: {
-                'Accept': 'application/json',
-                'Content-Type': 'application/json'
-            },
-            body: JSON.stringify({
-                foodId,
-                ingredientId
-            })
+        const response = await fetch(`/deleteIngredient/${foodId}/${ingredientId}`, {
+            method: "DELETE"
         }).then(res => res.json());
         ingredients = ingredients.filter(el => el.id !== ingredientId);
         dispatch(deleteIngredientActionCreator(ingredients));
@@ -232,7 +209,7 @@ export const UpdateRestaurant = (restaurants:AdminRestaurant[], restId:number):T
     return async dispatch => {
         try {
             const response = await fetch("/updateRestaurant", {
-                method: "POST",
+                method: "PUT",
                 headers: {
                     'Accept': 'application/json',
                     'Content-Type': 'application/json'

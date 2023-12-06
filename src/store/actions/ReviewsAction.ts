@@ -37,15 +37,9 @@ export const addReview = (text:string, grade:number, rating:number, restId:numbe
 export const getAllReviews = (restId:number):ThunkAction<void, RootState,unknown,AnyAction> => {
     return async dispatch => {
         try {
-            const reviews = await fetch("/getAllReviews", {
-                method: "POST",
-                headers: {
-                    'Accept': 'application/json',
-                    'Content-Type': 'application/json'
-                },
-                body: JSON.stringify({
-                    id: restId
-                })
+            const reviews = await fetch(`/getAllReviews/?id=${restId}`, {
+                method: "GET"
+
             }).then(res => res.json());
             dispatch(getReviewsActionCreator(reviews));
         } catch (e:any) {

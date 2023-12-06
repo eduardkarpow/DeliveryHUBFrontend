@@ -66,15 +66,8 @@ export const makeOrder = (menu:MenuItemModel[], restId:number, fullPrice:number,
 export const getAllOrders = (login:string):ThunkAction<void, RootState,unknown,AnyAction> => {
     return async dispatch => {
         try{
-            let orders:Order[] = await fetch("/getOrders", {
-                method: "POST",
-                headers: {
-                    'Accept': 'application/json',
-                    'Content-Type': 'application/json'
-                },
-                body: JSON.stringify({
-                    login
-                })
+            let orders:Order[] = await fetch(`/getOrders/?login=${login}`, {
+                method: "GET"
             }).then(res => res.json());
             orders = orders.sort((a, b) => Date.parse(b.datetime) - Date.parse(a.datetime));
             dispatch(getAllOrdersActionCreator(orders));
@@ -87,15 +80,8 @@ export const getAllOrders = (login:string):ThunkAction<void, RootState,unknown,A
 export const getOrderInfo = (id:number):ThunkAction<void, RootState,unknown,AnyAction> => {
     return async dispatch => {
         try {
-            const orderInfo = await fetch("/getOrderInfo", {
-                method: "POST",
-                headers: {
-                    'Accept': 'application/json',
-                    'Content-Type': 'application/json'
-                },
-                body: JSON.stringify({
-                    id
-                })
+            const orderInfo = await fetch(`/getOrderInfo/?id=${id}`, {
+                method: "GET"
             }).then(res => res.json());
             dispatch(getInfoActionCreator(orderInfo));
         } catch (e: any) {

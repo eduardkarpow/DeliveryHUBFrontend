@@ -154,7 +154,7 @@ export const updateOrderStatus = (orders:AdminOrder[], id:number, status:string)
     return async dispatch => {
         try {
             await fetch("/updateOrderStatus", {
-                method: "POST",
+                method: "PUT",
                 headers: {
                     'Accept': 'application/json',
                     'Content-Type': 'application/json'

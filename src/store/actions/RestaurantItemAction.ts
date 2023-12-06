@@ -29,14 +29,8 @@ export const getMenu = (id:number):ThunkAction<void, RootState,unknown,AnyAction
     return async dispatch => {
         try{
 
-            const menu = await fetch("/getMenu", {
-                method: "POST",
-                headers: {
-                    'Accept': 'application/json',
-                    'Content-Type': 'application/json'
-                },
-
-                body: JSON.stringify({id: id})
+            const menu = await fetch(`/getMenu/?id=${id}`, {
+                method: "GET"
             }).then(res => res.json());
             for(let i = 0; i < menu.length; i++){
                 menu[i].amount = 0;
