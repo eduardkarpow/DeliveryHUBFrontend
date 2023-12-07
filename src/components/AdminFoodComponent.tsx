@@ -5,7 +5,7 @@ import {useAppDispatch, useAppSelector} from "../hooks/ReduxHooks";
 import styles from "../styles/admin.module.css";
 import {NavLink, useParams} from "react-router-dom";
 import {getFoodsActionCreator} from "../store/AdminFoodReducer";
-import {AddFood, AddRestaurant, deleteFoodItem, GetFoods} from "../store/actions/AdminAction";
+import {AddFood, AddRestaurant, AddSpec, deleteFoodItem, GetFoods, GetSpecs} from "../store/actions/AdminAction";
 import {ErrorHandlerHook} from "../hooks/ErrorHandler";
 
 const AdminFoodComponent = () => {
@@ -19,14 +19,17 @@ const AdminFoodComponent = () => {
     const [proteins, setProteins] = useState(0);
     const [carbohydrates, setCarbohydrates] = useState(0);
     const [selected, setSelected] = useState<File>();
+    const [spec, setSpec] = useState("");
 
     const dispatch:ThunkDispatch<RootState, unknown,any> = useAppDispatch();
     const params = useParams();
     const foods = useAppSelector(state => state.AdminFood.foods);
+    const specs = useAppSelector(state => state.AdminFood.specs);
 
 
     useEffect(() => {
         dispatch(GetFoods(Number(params.restid)));
+        dispatch(GetSpecs());
     }, [])
 
     const addFood = (event:any) => {
@@ -47,13 +50,38 @@ const AdminFoodComponent = () => {
             dispatch(deleteFoodItem(foods, foodId));
         }
     }
+    const addSpecialization = (event:any) => {
+        event.preventDefault();
+        if(specs.filter(el => el === spec).length === 0){
+            ErrorHandlerHook(new Error("Такой специализации нет"));
+            return;
+        }
+        dispatch(AddSpec(Number(params.restid), spec));
+    }
 
     return (
         <section className={styles.wrapper}>
+            <form acceptCharset={"utf-8"} className = {styles.thinForm}>
+                <div className={styles.caption_big}>Выбор специализации</div>
+                <label htmlFor="specializations" className={styles.location}>
+                    <input list="browsers"  name="specializations" value={spec} onChange={e => setSpec(e.target.value)}/>
+                    <datalist id="browsers">
+                        {specs.map(specItem => {
+                            return <option value={specItem} key={specItem}>{specItem}</option>
+                        })}
+
+                    </datalist>
+                    <div className={styles.arrow}>
+                        <span></span>
+                        <span></span>
+                    </div>
+                </label>
+                <button onClick = {addSpecialization}>Добавить</button>
+            </form>
             <form acceptCharset={"utf-8"}>
                 <label htmlFor="name">Название блюда</label>
                 <input type="text" id="name"
-                       placeholder="Введите название ресторана"
+                       placeholder="Введите название блюда"
                        value={name}
                        onChange={e => setName(e.target.value)} />
                 <label htmlFor="price">Цена</label>

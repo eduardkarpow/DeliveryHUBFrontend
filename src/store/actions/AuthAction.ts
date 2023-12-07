@@ -70,7 +70,7 @@ export const logIn = (login:string, password:string):ThunkAction<void, RootState
             dispatch(authActionCreator(true));
             dispatch(avatarActionCreator(data.user.avatar_href));
         } catch (e:any){
-            ErrorHandlerHook(e);
+            ErrorHandlerHook(new Error("Некорректные данные"));
         }
 
     }

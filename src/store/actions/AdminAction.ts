@@ -3,7 +3,11 @@ import {RootState} from "../index";
 import {AnyAction} from "redux";
 import {ErrorHandlerHook} from "../../hooks/ErrorHandler";
 import {getRestsActionCreator, updateRestsActionCreator} from "../AdminRestaurantsReducer";
-import {deleteFoodActionCreator, getFoodsActionCreator} from "../AdminFoodReducer";
+import {
+    deleteFoodActionCreator,
+    getFoodsActionCreator,
+    getSpecActionCreator,
+} from "../AdminFoodReducer";
 import {deleteIngredientActionCreator, getIngredientsActionCreator} from "../AdminIngredientsReducer";
 import {AdminIngredient} from "../../models/AdminIngredientsModel";
 import {AdminFood} from "../../models/AdminFoodModel";
@@ -144,18 +148,25 @@ export const GetIngredients = (foodId:number):ThunkAction<void, RootState,unknow
 }
 export const AddExistingIngredient = (foodId:number, ingredientId:number):ThunkAction<void, RootState,unknown,AnyAction> => {
     return async dispatch => {
-        console.log(123);
-        const response = await fetch("/addIngredient", {
-            method: "POST",
-            headers: {
-                'Accept': 'application/json',
-                'Content-Type': 'application/json'
-            },
-            body: JSON.stringify({
-                foodId,
-                ingredientId
-            })
-        }).then(res => res.json());
+        try {
+            const response = await fetch("/addIngredient", {
+                method: "POST",
+                headers: {
+                    'Accept': 'application/json',
+                    'Content-Type': 'application/json'
+                },
+                body: JSON.stringify({
+                    foodId,
+                    ingredientId
+                })
+            }).then(res => res.json());
+            if(response.status !== 200){
+                throw new Error(response.message);
+            }
+        } catch (e:any){
+            ErrorHandlerHook(e);
+        }
+
     }
 }
 export const AddIngredient = (name:string, foodId:number, formData:FormData):ThunkAction<void, RootState,unknown,AnyAction> => {
@@ -226,6 +237,41 @@ export const UpdateRestaurant = (restaurants:AdminRestaurant[], restId:number):T
             });
             dispatch(updateRestsActionCreator(restaurants));
         } catch (e: any) {
+            ErrorHandlerHook(e);
+        }
+    }
+}
+export const GetSpecs = ():ThunkAction<void, RootState,unknown,AnyAction> => {
+    return async dispatch => {
+        try{
+            const response = await fetch("/getSpecializations", {
+                method: "GET"
+            }).then(res => res.json());
+            const specs = response.map((el:any) => el.food_specialization);
+            dispatch(getSpecActionCreator(specs));
+        } catch (e:any){
+            ErrorHandlerHook(e);
+        }
+    }
+}
+export const AddSpec = (restId: number, spec:string):ThunkAction<void, RootState,unknown,AnyAction> => {
+    return async dispatch => {
+        try{
+            const response = await fetch("/addSpecializationToRestaurant", {
+                method: "POST",
+                headers: {
+                    'Accept': 'application/json',
+                    'Content-Type': 'application/json'
+                },
+                body: JSON.stringify({
+                    restId,
+                    spec
+                })
+            });
+            if(response.status !== 200){
+                throw new Error("Ресторан уже имеет данную специализацию");
+            }
+        } catch (e:any){
             ErrorHandlerHook(e);
         }
     }

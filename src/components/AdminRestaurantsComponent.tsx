@@ -60,7 +60,12 @@ const AdminRestaurantsComponent = () => {
                 <label htmlFor="priceRating">Рейтинг цен</label>
                 <input type="number" id="priceRating"
                        value={priceRating}
-                       onChange={e => setPriceRating(Number(e.target.value))} />
+                       onChange={e => {
+                           if(Number(e.target.value) > 5){
+                               return setPriceRating(5);
+                           }
+                           return setPriceRating(Number(e.target.value))
+                       }} />
                 <input type="file" accept="image/*" ref={filePicker} onChange={e => {
                     if(e.target.files) {
                         setSelected(e.target.files[0]);

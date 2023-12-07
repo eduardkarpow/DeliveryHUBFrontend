@@ -6,6 +6,7 @@ import {RootState} from "../store";
 import {ThunkDispatch} from "redux-thunk";
 import {GetOrders} from "../store/actions/AdminAction";
 import {updateOrderStatus} from "../store/actions/AuthAction";
+import {ErrorHandlerHook} from "../hooks/ErrorHandler";
 
 const AdminOrdersComponent = () => {
 
@@ -23,6 +24,10 @@ const AdminOrdersComponent = () => {
 
     const updateOrder = (event:any) => {
         event.preventDefault();
+        if(!(status in statuses)) {
+            ErrorHandlerHook(new Error("некорректный статус"));
+            return;
+        }
         dispatch(updateOrderStatus(orders, id, status));
         setId(0);
         setStatus("");

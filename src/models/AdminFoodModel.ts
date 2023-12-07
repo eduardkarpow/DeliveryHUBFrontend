@@ -1,5 +1,6 @@
 export interface AdminFoodModel{
-    foods: AdminFood[]
+    foods: AdminFood[];
+    specs: string[];
 }
 export type AdminFood = {
     name: string,

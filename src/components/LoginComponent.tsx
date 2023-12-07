@@ -24,7 +24,7 @@ function LoginComponent() {
             <form>
                 <label htmlFor="login">Логин</label>
                 <input type="text" id="login"
-                       placeholder="Ввкдите логин"
+                       placeholder="Введите логин"
                        value={login} onChange={e => setLogin(e.target.value)} />
                 <label htmlFor="password">Пароль</label>
                 <input type="password" id="password"
