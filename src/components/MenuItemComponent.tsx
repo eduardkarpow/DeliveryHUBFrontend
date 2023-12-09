@@ -6,6 +6,7 @@ import {useAppDispatch, useAppSelector} from "../hooks/ReduxHooks";
 import {ThunkDispatch} from "redux-thunk";
 import {RootState} from "../store";
 import {decrement, increment} from "../store/actions/RestaurantItemAction";
+import {BASE_URL} from "../index";
 
 const MenuItemComponent = (props:MenuProps) => {
 
@@ -16,7 +17,7 @@ const MenuItemComponent = (props:MenuProps) => {
 
     return (
         <div className={styles.menu_item}>
-            <NavLink to={`/restaurants/${props.restId}/${props.id}`}><img src={`http://localhost:8000/${props.image_href}`} alt={props.name}/></NavLink>
+            <NavLink to={`/restaurants/${props.restId}/${props.id}`}><img src={`${BASE_URL}/${props.image_href}`} alt={props.name}/></NavLink>
             <div>{props.name}</div>
             <div className={styles.food_price}>{props.price + " ₽"}</div>
             {

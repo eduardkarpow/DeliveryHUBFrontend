@@ -1,15 +1,16 @@
 import React from 'react';
 import styles from "../styles/restaurants.module.css";
 import {RestaurantProps} from "../models/RestaurantsModel";
+import {BASE_URL} from "../index";
 const RestaurantItemComponent = (props:RestaurantProps) => {
     return (
         <div className={styles.restaurant_item}>
-            <img src={"http://localhost:8000/"+props.image_href} alt={props.name}/>
+            <img src={`${BASE_URL}/${props.image_href}`} alt={props.name}/>
             <div className={styles.content}>
                 <div className={styles.restaurant_name}>{props.name}</div>
-                <div className={styles.info}><div>{props.rating}</div><div>(0)</div>
+                <div className={styles.info}><div>{props.rating}</div><div></div>
                     <div>
-                        {Array(props.priceRating).fill(0).map((item, index) => <span key={index}>$</span>)}
+                        {Array(props.priceRating).fill(0).map((item, index) => <span key={index}>₽</span>)}
                     </div>
                 </div>
                 <div className={styles.category}>{props.specs.map(spec => <div>{spec}</div>)}</div>

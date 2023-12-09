@@ -7,6 +7,7 @@ import {ThunkDispatch} from "redux-thunk";
 import {GetOrders} from "../store/actions/AdminAction";
 import {updateOrderStatus} from "../store/actions/AuthAction";
 import {ErrorHandlerHook} from "../hooks/ErrorHandler";
+import {BASE_URL} from "../index";
 
 const AdminOrdersComponent = () => {
 
@@ -24,7 +25,7 @@ const AdminOrdersComponent = () => {
 
     const updateOrder = (event:any) => {
         event.preventDefault();
-        if(!(status in statuses)) {
+        if(statuses.filter(stat => stat === status).length === 0) {
             ErrorHandlerHook(new Error("некорректный статус"));
             return;
         }
@@ -64,7 +65,7 @@ const AdminOrdersComponent = () => {
                 {orders.map(order => {
                     return <NavLink to={`/orders/${order.id}`} className={styles.restaurant_item}>
                         <div className={styles.image}>
-                            <img src={`http://localhost:8000/${order.image}`} alt=""/>
+                            <img src={`${BASE_URL}/${order.image}`} alt=""/>
 
                         </div>
                         <div className={styles.info}>

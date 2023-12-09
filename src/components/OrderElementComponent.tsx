@@ -5,6 +5,7 @@ import {useAppDispatch, useAppSelector} from "../hooks/ReduxHooks";
 import {ThunkDispatch} from "redux-thunk";
 import {RootState} from "../store";
 import {decrement, increment} from "../store/actions/RestaurantItemAction";
+import {BASE_URL} from "../index";
 
 const OrderElementComponent = (props:OrderItemProps) => {
 
@@ -16,7 +17,7 @@ const OrderElementComponent = (props:OrderItemProps) => {
     return (
         <div className={styles.order_element}>
             <div className={styles.element_info}>
-                <div className={styles.element_img}><img src={`http://localhost:8000/${props.image_href}`} alt=""/></div>
+                <div className={styles.element_img}><img src={`${BASE_URL}/${props.image_href}`} alt=""/></div>
                 <div className={styles.element_name}>{props.name}</div>
             </div>
             <div className={styles.element_order_info}>

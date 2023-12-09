@@ -8,7 +8,6 @@ import {history, RootState} from "../store";
 import {getAllOrders} from "../store/actions/OrdersAction";
 import {checkAuth} from "../store/actions/AuthAction";
 import {ErrorHandlerHook} from "../hooks/ErrorHandler";
-import {authActionCreator} from "../store/AuthReducer";
 const OrderListComponent = () => {
 
 

@@ -50,7 +50,7 @@ const RestaurantsComponent = () => {
                 {specs.map((spec, index) => <span onClick={addClass} key = {spec.food_specialization}>{spec.food_specialization}</span>)}
             </div>
             <div className={styles.prices}>
-                <span onClick={addPrice} id="1">$</span><span onClick={addPrice} id="2">$$</span><span onClick={addPrice} id="3">$$$</span> <span className={styles.clear} onClick={clear}>Очистить</span>
+                <span onClick={addPrice} id="1">₽</span><span onClick={addPrice} id="2">₽₽</span><span onClick={addPrice} id="3">₽₽₽</span> <span className={styles.clear} onClick={clear}>Очистить</span>
             </div>
             <div className={styles.search}>
                 <input className = {styles.search_input}

@@ -7,6 +7,7 @@ import {NavLink, useParams} from "react-router-dom";
 import {getFoodsActionCreator} from "../store/AdminFoodReducer";
 import {AddFood, AddRestaurant, AddSpec, deleteFoodItem, GetFoods, GetSpecs} from "../store/actions/AdminAction";
 import {ErrorHandlerHook} from "../hooks/ErrorHandler";
+import {BASE_URL} from "../index";
 
 const AdminFoodComponent = () => {
 
@@ -85,20 +86,20 @@ const AdminFoodComponent = () => {
                        value={name}
                        onChange={e => setName(e.target.value)} />
                 <label htmlFor="price">Цена</label>
-                <input type="text" id="price"
+                <input type="number" id="price"
                        placeholder="Введите цену"
                        value={price}
                        onChange={e => setPrice(Number(e.target.value))} />
                 <div className={styles.row}>
                     <div className={styles.row_item}>
                         <label htmlFor="weight">Вес</label>
-                        <input type="text" id="weight"
+                        <input type="number" id="weight"
                                value={weight}
                                onChange={e => setWeight(Number(e.target.value))} />
                     </div>
                     <div className={styles.row_item}>
                         <label htmlFor="calories">Калорийность</label>
-                        <input type="text" id="calories"
+                        <input type="number" id="calories"
                                value={calories}
                                onChange={e => setCalories(Number(e.target.value))} />
                     </div>
@@ -107,13 +108,13 @@ const AdminFoodComponent = () => {
                 <div className={styles.row}>
                     <div className={styles.row_item}>
                         <label htmlFor="fats">Жиры</label>
-                        <input type="text" id="fats"
+                        <input type="number" id="fats"
                                value={fats}
                                onChange={e => setFats(Number(e.target.value))} />
                     </div>
                     <div className={styles.row_item}>
                         <label htmlFor="carbohydrates">Углеводы</label>
-                        <input type="text" id="carbohydrates"
+                        <input type="number" id="carbohydrates"
                                value={carbohydrates}
                                onChange={e => setCarbohydrates(Number(e.target.value))} />
                     </div>
@@ -121,7 +122,7 @@ const AdminFoodComponent = () => {
 
                 </div>
                         <label htmlFor="proteins">Белки</label>
-                        <input type="text" id="proteins"
+                        <input type="number" id="proteins"
                                value={proteins}
                                onChange={e => setProteins(Number(e.target.value))} />
 
@@ -144,7 +145,7 @@ const AdminFoodComponent = () => {
                 {
                     if(el.isVisible) {
                         return <div  className={styles.restaurant_item}>
-                            <NavLink to={`/admin/ingredients/${el.id}`} className={styles.image}><img src={`http://localhost:8000/${el.image}`} alt=""/></NavLink>
+                            <NavLink to={`/admin/ingredients/${el.id}`} className={styles.image}><img src={`${BASE_URL}/${el.image}`} alt=""/></NavLink>
                             <div className={styles.info}>
                                 <div className={styles.caption}>{el.name}</div>
                                 <div className={styles.id}>id: {el.id}</div>

@@ -6,6 +6,7 @@ import {ThunkDispatch} from "redux-thunk";
 import {RootState} from "../store";
 import {useAppDispatch, useAppSelector} from "../hooks/ReduxHooks";
 import {getOrderInfo} from "../store/actions/OrdersAction";
+import {BASE_URL} from "../index";
 
 
 
@@ -27,7 +28,7 @@ const OrderInfoComponent = () => {
             <section className={styles.restaurant_info}>
                 <div className={styles.restaurant_image}>
                     <NavLink to = {`/restaurants/${orderInfo.restId}`}>
-                        <img src={`http://localhost:8000/${orderInfo.restImage}`} alt="restaurant"/>
+                        <img src={`${BASE_URL}/${orderInfo.restImage}`} alt="restaurant"/>
                     </NavLink>
                 </div>
                 <div className={styles.restaurant_caption}>

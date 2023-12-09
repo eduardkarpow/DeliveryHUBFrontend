@@ -10,7 +10,7 @@ import * as FetchIntercept from "fetch-intercept";
 const root = ReactDOM.createRoot(
   document.getElementById('root') as HTMLElement
 );
-const BASE_URL = "http://localhost:8000";
+export const BASE_URL = "http://79.174.93.252:8000";
 // @ts-ignore
 const unregister = FetchIntercept.register({
     request: (url, config) => {

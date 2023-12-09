@@ -8,6 +8,7 @@ import {AddRestaurant, GetRestaurants, UpdateRestaurant} from "../store/actions/
 import {ErrorHandlerHook} from "../hooks/ErrorHandler";
 import styles from "../styles/admin.module.css";
 import {NavLink} from "react-router-dom";
+import {BASE_URL} from "../index";
 
 const AdminRestaurantsComponent = () => {
 
@@ -80,7 +81,7 @@ const AdminRestaurantsComponent = () => {
                 </div>
                 {rests.map(el =>
                     <NavLink to={`/admin/food/${el.id}`} className={styles.restaurant_item}>
-                    <div className={styles.image}><img src={`http://localhost:8000/${el.image}`} alt=""/></div>
+                    <div className={styles.image}><img src={`${BASE_URL}/${el.image}`} alt=""/></div>
                     <div className={styles.info}>
                         <div className={styles.caption}>{el.name}</div>
                         <div className={styles.id}>id: {el.id}</div>

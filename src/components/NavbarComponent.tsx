@@ -6,6 +6,7 @@ import {ThunkDispatch} from "redux-thunk";
 import {RootState} from "../store";
 import {logout} from "../store/actions/AuthAction";
 import img from "../images/avatar/Mark_Zuckerberg.jpg";
+import {BASE_URL} from "../index";
 
 const NavbarComponent = () => {
 
@@ -33,7 +34,7 @@ const NavbarComponent = () => {
                 {isAuth ?
                     <div className={styles.account}>
                         <NavLink to="/account" className={styles.avatar}>
-                            <img src={avatar} alt="123"/>
+                            <img src={BASE_URL+avatar.slice(21)} alt="123"/>
                         </NavLink>
                         <div>{login}</div>
                         <div>

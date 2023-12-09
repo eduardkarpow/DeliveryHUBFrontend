@@ -24,7 +24,7 @@ function RegisterComponent() {
 
     useEffect(() => {
         if(isAuth){
-            navigate("/login");
+            //navigate("/login");
         }
 
     }, [isAuth, navigate]);
@@ -51,10 +51,11 @@ function RegisterComponent() {
             formData.append("image", filePicker.current.files[0]);
         }
         dispatch(loadingActionCreator(true));
-        setTimeout(() => {
-            dispatch(uploadImage(formData));
-            dispatch(loadingActionCreator(false));
-        }, 1000);
+        dispatch(uploadImage(formData));
+        dispatch(loadingActionCreator(false));
+        /*setTimeout(() => {
+
+        }, 1000);*/
 
     }
 

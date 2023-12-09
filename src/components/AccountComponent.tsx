@@ -8,6 +8,7 @@ import {checkAuth} from "../store/actions/AuthAction";
 import {ErrorHandlerHook} from "../hooks/ErrorHandler";
 import {history} from "../store/index";
 import {removeSQLInjection} from "../hooks/removeSQLInjection";
+import {BASE_URL} from "../index";
 
 const AccountComponent = () => {
 
@@ -48,7 +49,7 @@ const AccountComponent = () => {
     return (
         <div className={styles.account}>
             <div className={styles.info}>
-                <div className={styles.avatar_image}><img src={avatarHref} alt=""/></div>
+                <div className={styles.avatar_image}><img src={BASE_URL+avatarHref.slice(21)} alt=""/></div>
                 <div className={styles.avatar_name}>{firstName} {lastName}</div>
             </div>
             <div className={styles.location_block}>

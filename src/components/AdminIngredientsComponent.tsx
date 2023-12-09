@@ -12,6 +12,7 @@ import {
     GetIngredients
 } from "../store/actions/AdminAction";
 import {ErrorHandlerHook} from "../hooks/ErrorHandler";
+import {BASE_URL} from "../index";
 
 const AdminIngredientsComponent = () => {
     const filePicker = useRef(null);
@@ -57,7 +58,7 @@ const AdminIngredientsComponent = () => {
             <div className={styles.forms}>
                 <form acceptCharset={"utf-8"} className={styles.form_small}>
                     <label htmlFor="name">id ингредиента</label>
-                    <input type="text" id="name"
+                    <input type="number" id="name"
                            placeholder="Введите название ресторана"
                            value={ingrId}
                            onChange={e => setIngrId(Number(e.target.value))} />
@@ -67,7 +68,7 @@ const AdminIngredientsComponent = () => {
                 <form acceptCharset={"utf-8"} className={styles.form_small}>
                     <label htmlFor="name">Название ингредиента</label>
                     <input type="text" id="name"
-                           placeholder="Введите название ресторана"
+                           placeholder="Введите название ингредиента"
                            value={name}
                            onChange={e => setName(e.target.value)} />
 
@@ -89,7 +90,7 @@ const AdminIngredientsComponent = () => {
                 </div>
                 {foodIngrs.map(el =>
                     <div  className={styles.restaurant_item}>
-                        <div className={styles.image}><img src={`http://localhost:8000/${el.image}`} alt=""/></div>
+                        <div className={styles.image}><img src={`${BASE_URL}/${el.image}`} alt=""/></div>
                         <div className={styles.info}>
                             <div className={styles.caption}>{el.name}</div>
                             <div className={styles.id}>id: {el.id}</div>
@@ -103,7 +104,7 @@ const AdminIngredientsComponent = () => {
                 <div>Доступные ингредиенты</div>
                 {ingrs.map(el =>
                     <div className={styles.restaurant_item}>
-                        <div className={styles.image}><img src={`http://localhost:8000/${el.image}`} alt=""/></div>
+                        <div className={styles.image}><img src={`${BASE_URL}/${el.image}`} alt=""/></div>
                         <div className={styles.info}>
                             <div className={styles.caption}>{el.name}</div>
                             <div className={styles.id}>id: {el.id}</div>

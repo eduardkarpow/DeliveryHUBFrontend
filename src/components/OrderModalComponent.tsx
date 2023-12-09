@@ -9,6 +9,7 @@ import {getAllLocations} from "../store/actions/AccountAction";
 import {checkAuth} from "../store/actions/AuthAction";
 import {ErrorHandlerHook} from "../hooks/ErrorHandler";
 import {clearMenuActionCreator} from "../store/RestaurantItemReducer";
+import {BASE_URL} from "../index";
 
 function OrderModalComponent() {
 
@@ -76,7 +77,7 @@ function OrderModalComponent() {
                 {isFirst ?
                 <div className={styles.firstSlide}>
                     <div className={styles.restaurant}>
-                        <div className={styles.rest_img}><img src={`http://localhost:8000/${restaurant_image_href}`} alt=""/></div>
+                        <div className={styles.rest_img}><img src={`${BASE_URL}/${restaurant_image_href}`} alt=""/></div>
                         <div className={styles.rest_info}>
                             <div className={styles.rest_name}>{name}</div>
                             <div className={styles.rest_location}>{location}</div>
@@ -99,7 +100,7 @@ function OrderModalComponent() {
                 :
                 (<div className={styles.secondSlide}>
                     <div className={styles.restaurant}>
-                        <div className={styles.rest_img}><img src={`http://localhost:8000/${restaurant_image_href}`} alt=""/></div>
+                        <div className={styles.rest_img}><img src={`${BASE_URL}/${restaurant_image_href}`} alt=""/></div>
                         <div className={styles.rest_info}>
                             <div className={styles.rest_name}>{name}</div>
                             <div className={styles.rest_location}>{location}</div>

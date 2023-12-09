@@ -5,6 +5,7 @@ import {ThunkDispatch} from "redux-thunk";
 import {RootState} from "../store";
 import {useAppDispatch, useAppSelector} from "../hooks/ReduxHooks";
 import {getIngredientsInfo} from "../store/actions/IngredientsAction";
+import {BASE_URL} from "../index";
 const IngredientsComponent = () => {
 
     const params = useParams();
@@ -22,7 +23,7 @@ const IngredientsComponent = () => {
     return (
         <div className={styles.wrapper}>
             <div className={styles.container}>
-                <img src={`http://localhost:8000/${ingredientsInfo.image}`} alt="burger" id={styles.food}/>
+                <img src={`${BASE_URL}/${ingredientsInfo.image}`} alt="burger" id={styles.food}/>
                 <div>
                     <div className={styles.caption}>{ingredientsInfo.name}</div>
                     <div className={styles.calories}>
@@ -54,7 +55,7 @@ const IngredientsComponent = () => {
             {ingredientsInfo.ingredients.map(el =>
 
                     <div className={styles.ingredient_item}>
-                        <img src={`http://localhost:8000/${el.image}`} alt="Bun"/>
+                        <img src={`${BASE_URL}/${el.image}`} alt="Bun"/>
                         <div className={styles.ingredient_caption}>{el.name}</div>
                     </div>
 
